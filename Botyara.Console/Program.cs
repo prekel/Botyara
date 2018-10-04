@@ -1,4 +1,5 @@
 ﻿using System;
+using Botyara.SfuApi;
 
 namespace Botyara.Console
 {
@@ -7,6 +8,8 @@ namespace Botyara.Console
 		static void Main(string[] args)
 		{
 			System.Console.WriteLine("Hello World!");
+			var c = new Request();
+			c.Run();
 		}
 	}
 }
