@@ -15,6 +15,8 @@ namespace Botyara.Console
 				token = r.ReadLine();
 			}
 			var auth = new Authorizer(token);
+			var t = new Test(auth.Api);
+			t.Run();
 		}
 	}
 }
