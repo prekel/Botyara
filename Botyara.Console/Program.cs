@@ -7,9 +7,11 @@ namespace Botyara.Console
 	{
 		static void Main(string[] args)
 		{
-			System.Console.WriteLine("Hello World!");
-			var c = new Request();
-			c.Run();
+			//System.Console.WriteLine("Hello World!");
+			var c = new TimetableBuilder("КИ18-17/1б");
+			var t = c.Get();
+			
+			
 		}
 	}
 }
