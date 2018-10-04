@@ -1,4 +1,7 @@
 ﻿using System;
+using System.IO;
+using Botyara.Console;
+using Botyara.Core;
 
 namespace Botyara.Console
 {
@@ -6,7 +9,12 @@ namespace Botyara.Console
 	{
 		static void Main(string[] args)
 		{
-			Console.WriteLine("Hello World!");
+			string token; 
+			using (var r = new StreamReader("token.txt"))
+			{
+				token = r.ReadLine();
+			}
+			var auth = new Authorizer(token);
 		}
 	}
 }
