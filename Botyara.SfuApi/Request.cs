@@ -17,6 +17,8 @@ namespace Botyara.SfuApi
 			var webClient = new WebClient();
 			webClient.QueryString.Add("target", "КИ18-17/1Б");
 			var result = webClient.DownloadString("http://edu.sfu-kras.ru/api/timetable/get");
+
+			var t = JsonConvert.DeserializeObject<StudyTimetable>(result);
 		}
 	}
 }
