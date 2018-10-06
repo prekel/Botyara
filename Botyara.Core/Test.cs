@@ -13,7 +13,7 @@ namespace Botyara.Core
 	public class Test
 	{
 		public VkApi Api { get; private set; }
-		
+
 		public Test(VkApi api)
 		{
 			Api = api;
@@ -25,7 +25,7 @@ namespace Botyara.Core
 			//{
 			//	Count = 100,
 			//	Filter = GetConversationFilter.All
-				
+
 			//});
 
 			//			var msgs = Api.Messages.GetHistory(new MessagesGetHistoryParams()
@@ -53,7 +53,7 @@ namespace Botyara.Core
 			while (true)
 			{
 				var resp = Api.CallLongPoll(srv.Server, new VkNet.Utils.VkParameters(d));
-				
+
 				try
 				{
 					var respmsg = resp["updates"][0]["object"]["text"];
@@ -68,18 +68,19 @@ namespace Botyara.Core
 						b = Int32.Parse(spl[1]);
 						var c = new TimetableBuilder(" »18-17/1·");
 						var t = c.Get();
-						msg = String.Join(" ", from i in t.Timetable where i.Day == a && i.Week == b select i.Subject);
+						msg = String.Join(", ", from i in t.Timetable where i.Day == a && i.Week == b select i.Subject);
+
+						var typ = resp["updates"][0]["type"];
+						if (msg != "" && typ == "message_new")
+						{
+							Api.Messages.Send(new MessagesSendParams
+							{
+								PeerId = Int64.Parse(resp["updates"][0]["object"]["peer_id"]),
+								Message = msg
+							});
+						}
 					}
 
-					var typ = resp["updates"][0]["type"];
-					if (msg != "" && typ == "message_new")
-					{
-						Api.Messages.Send(new MessagesSendParams
-						{
-							PeerId = Int64.Parse(resp["updates"][0]["object"]["peer_id"]),
-							Message = msg
-						});
-					}
 				}
 				catch (Exception e)
 				{
