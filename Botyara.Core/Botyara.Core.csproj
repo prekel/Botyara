@@ -8,4 +8,8 @@
       <PackageReference Include="VkNet" Version="1.38.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Botyara.SfuApi\Botyara.SfuApi.csproj" />
+    </ItemGroup>
+
 </Project>

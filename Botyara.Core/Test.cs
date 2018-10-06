@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using VkNet;
 using VkNet.Enums.SafetyEnums;
 using VkNet.Model.RequestParams;
-
 using Newtonsoft.Json;
+using Botyara.SfuApi;
 
 namespace Botyara.Core
 {
@@ -55,7 +56,21 @@ namespace Botyara.Core
 				
 				try
 				{
-					var msg = resp["updates"][0]["object"]["text"];
+					var respmsg = resp["updates"][0]["object"]["text"];
+					var msg = respmsg.ToString();
+
+					var spl = msg.ToString().Split();
+					var a = 0;
+					var b = 0;
+					if (spl.Length == 2)
+					{
+						a = Int32.Parse(spl[0]);
+						b = Int32.Parse(spl[1]);
+						var c = new TimetableBuilder(" »18-17/1·");
+						var t = c.Get();
+						msg = String.Join(" ", from i in t.Timetable where i.Day == a && i.Week == b select i.Subject);
+					}
+
 					var typ = resp["updates"][0]["type"];
 					if (msg != "" && typ == "message_new")
 					{
@@ -66,9 +81,9 @@ namespace Botyara.Core
 						});
 					}
 				}
-				catch
+				catch (Exception e)
 				{
-					// ignored
+					Console.WriteLine(e);
 				}
 
 				d["ts"] = resp["ts"];
