@@ -52,16 +52,23 @@ namespace Botyara.Core
 			while (true)
 			{
 				var resp = Api.CallLongPoll(srv.Server, new VkNet.Utils.VkParameters(d));
-
-				var msg = resp["updates"][0]["object"]["text"];
-				var typ = resp["updates"][0]["type"];
-				if (msg != "" && typ == "message_new")
+				
+				try
 				{
-					Api.Messages.Send(new MessagesSendParams
+					var msg = resp["updates"][0]["object"]["text"];
+					var typ = resp["updates"][0]["type"];
+					if (msg != "" && typ == "message_new")
 					{
-						PeerId = Int64.Parse(resp["updates"][0]["object"]["peer_id"]),
-						Message = msg
-					});
+						Api.Messages.Send(new MessagesSendParams
+						{
+							PeerId = Int64.Parse(resp["updates"][0]["object"]["peer_id"]),
+							Message = msg
+						});
+					}
+				}
+				catch
+				{
+					// ignored
 				}
 
 				d["ts"] = resp["ts"];
