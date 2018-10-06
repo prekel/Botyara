@@ -54,6 +54,8 @@ namespace Botyara.Core
 			{
 				var resp = Api.CallLongPoll(srv.Server, new VkNet.Utils.VkParameters(d));
 
+				Console.WriteLine(resp.RawJson.ToString());
+
 				try
 				{
 					var respmsg = resp["updates"][0]["object"]["text"];
