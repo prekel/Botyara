@@ -1,9 +1,12 @@
 ﻿using System;
+<<<<<<< HEAD
 using System.IO;
 using Botyara.Console;
+using Botyara.Core;
+=======
 using System.Linq;
 using Botyara.SfuApi;
-using Botyara.Core;
+>>>>>>> api
 
 namespace Botyara.Console
 {
@@ -11,18 +14,21 @@ namespace Botyara.Console
 	{
 		static void Main(string[] args)
 		{
-			var c = new TimetableBuilder("КИ18-17/1б");
-			var t = c.Get();
-			var q1 = (from i in t.Timetable where i.Day == 5 && i.Week == 1 select i.Subject).ToList();
-		
+<<<<<<< HEAD
 			string token; 
 			using (var r = new StreamReader("token.txt"))
 			{
 				token = r.ReadLine();
 			}
 			var auth = new Authorizer(token);
-			var t1 = new Test(auth.Api);
-			t1.Run();
+			var t = new Test(auth.Api);
+			t.Run();
+=======
+			var c = new TimetableBuilder("КИ18-17/1б");
+			var t = c.Get();
+
+			var q1 = (from i in t.Timetable where i.Day == 5 && i.Week == 1 select i.Subject).ToList();
+>>>>>>> api
 		}
 	}
 }
