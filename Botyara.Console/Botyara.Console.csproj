@@ -7,6 +7,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Botyara.Core\Botyara.Core.csproj" />
+      <ProjectReference Include="..\Botyara.SfuApi\Botyara.SfuApi.csproj" />
     </ItemGroup>
 
 </Project>
