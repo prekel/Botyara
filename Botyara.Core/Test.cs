@@ -1,8 +1,8 @@
+using System.Collections.Generic;
+
 using VkNet;
 using VkNet.Enums.SafetyEnums;
 using VkNet.Model.RequestParams;
-
-//using VkNet.
 
 namespace Botyara.Core
 {
@@ -17,24 +17,35 @@ namespace Botyara.Core
 
 		public void Run()
 		{
-			var chats = Api.Messages.GetConversations(new GetConversationsParams()
-			{
-				Count = 100,
-				Filter = GetConversationFilter.All
+			//var chats = Api.Messages.GetConversations(new GetConversationsParams()
+			//{
+			//	Count = 100,
+			//	Filter = GetConversationFilter.All
 				
-			});
-			
-//			var msgs = Api.Messages.GetHistory(new MessagesGetHistoryParams()
-//			{
-//				Count = 100,
-//				PeerId = 132740853,
-//			});
-			
-			var msgs = Api.Messages.GetHistory(new MessagesGetHistoryParams()
+			//});
+
+			//			var msgs = Api.Messages.GetHistory(new MessagesGetHistoryParams()
+			//			{
+			//				Count = 100,
+			//				PeerId = 132740853,
+			//			});
+
+			//var msgs = Api.Messages.GetHistory(new MessagesGetHistoryParams()
+			//{
+			//	Count = 100,
+			//	PeerId = 2000000001
+			//});
+
+			var srv = Api.Groups.GetLongPollServer(172122256);
+
+			var d = new Dictionary<string, string>
 			{
-				Count = 100,
-				PeerId = 2000000001,
-			});
+				["act"] = "a_check",
+				["key"] = srv.Key,
+				["ts"] = srv.Ts,
+				["wait"] = "25"
+			};
+			Api.CallLongPoll(srv.Server, new VkNet.Utils.VkParameters(d));
 		}
 	}
 }
