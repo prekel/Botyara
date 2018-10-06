@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
-
+using System.IO;
 using VkNet;
 using VkNet.Enums.SafetyEnums;
 using VkNet.Model.RequestParams;
+
+using Newtonsoft.Json;
 
 namespace Botyara.Core
 {
@@ -45,7 +48,24 @@ namespace Botyara.Core
 				["ts"] = srv.Ts,
 				["wait"] = "25"
 			};
-			Api.CallLongPoll(srv.Server, new VkNet.Utils.VkParameters(d));
+
+			while (true)
+			{
+				var resp = Api.CallLongPoll(srv.Server, new VkNet.Utils.VkParameters(d));
+
+				var msg = resp["updates"][0]["object"]["text"];
+				var typ = resp["updates"][0]["type"];
+				if (msg != "" && typ == "message_new")
+				{
+					Api.Messages.Send(new MessagesSendParams
+					{
+						PeerId = Int64.Parse(resp["updates"][0]["object"]["peer_id"]),
+						Message = msg
+					});
+				}
+
+				d["ts"] = resp["ts"];
+			}
 		}
 	}
 }
