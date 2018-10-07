@@ -1,4 +1,4 @@
-using System;
+Ôªøusing System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,25 +21,6 @@ namespace Botyara.Core
 
 		public void Run()
 		{
-			//var chats = Api.Messages.GetConversations(new GetConversationsParams()
-			//{
-			//	Count = 100,
-			//	Filter = GetConversationFilter.All
-
-			//});
-
-			//			var msgs = Api.Messages.GetHistory(new MessagesGetHistoryParams()
-			//			{
-			//				Count = 100,
-			//				PeerId = 132740853,
-			//			});
-
-			//var msgs = Api.Messages.GetHistory(new MessagesGetHistoryParams()
-			//{
-			//	Count = 100,
-			//	PeerId = 2000000001
-			//});
-
 			var srv = Api.Groups.GetLongPollServer(172122256);
 
 			var d = new Dictionary<string, string>
@@ -68,7 +49,7 @@ namespace Botyara.Core
 					{
 						a = Int32.Parse(spl[0]);
 						b = Int32.Parse(spl[1]);
-						var c = new TimetableBuilder(" »18-17/1·");
+						var c = new TimetableBuilder("–ö–ò18-17/1–±");
 						var t = c.Get();
 						msg = String.Join(", ", from i in t.Timetable where i.Day == a && i.Week == b select i.Subject);
 
