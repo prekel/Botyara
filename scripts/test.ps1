@@ -1,1 +1,1 @@
-Write-Host Здесь должны быть тесты
+Write-Host tests
