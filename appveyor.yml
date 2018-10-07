@@ -12,4 +12,4 @@ test_script:
 - pwsh: scripts/test.ps1
 artifacts:
 - path: '\'
-name: Botyara_All_Files
+- name: Botyara_All_Files
