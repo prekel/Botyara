@@ -5,7 +5,7 @@ image:
 configuration: Release
 platform: Any CPU
 install:
-- pwsh: scripts/version.ps1
+- pwsh: scripts/install.ps1
 build_script:
 - pwsh: scripts/build.ps1
 after_build:
@@ -17,10 +17,10 @@ artifacts:
   name: Botyara_All_Files
 - path: 'Botyara.Console\bin\Release\netcoreapp2.1\publish\'
   name: Botyara.Console
-environment:
-  vk_api_token:
-     secure: 6rzTkQTENJ8RBqdR6W58aFo4h9Ej4abx2AaKilwqNsnt3pvMUgGGvM0QlyXrIYcExeZmmbudDAn9pVjv3fu+6eGjBvS4bKCholJuWn99mjtlbDvcCBGtTd5/VTfVGhip
-  vps_platform: ubuntu.16.04-x64
+#environment:
+#  vk_api_token:
+#     secure: 6rzTkQTENJ8RBqdR6W58aFo4h9Ej4abx2AaKilwqNsnt3pvMUgGGvM0QlyXrIYcExeZmmbudDAn9pVjv3fu+6eGjBvS4bKCholJuWn99mjtlbDvcCBGtTd5/VTfVGhip
+#  vps_platform: ubuntu.16.04-x64
 deploy:
 - provider: FTP
   host: 
@@ -33,3 +33,4 @@ deploy:
   application: Botyara.Console
   on:
     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    need_deploy: True
