@@ -1,0 +1,15 @@
+version: 0.1.{build}
+image:
+- Visual Studio 2017
+- Ubuntu1804
+configuration: Release
+platform: Any CPU
+install:
+- pwsh: scripts/version.ps1
+build_script:
+- pwsh: scripts/build.ps1
+test_script:
+- pwsh: scripts/test.ps1
+artifacts:
+- path: '\'
+name: Botyara_All_Files
