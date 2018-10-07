@@ -15,7 +15,7 @@ test_script:
 artifacts:
 - path: '\'
   name: Botyara_All_Files
-- path: 'Botyara.Console\bin\Release\netcoreapp2.1\ubuntu.16.04-x64\publish\'
+- path: 'Botyara.Console\bin\Release\netcoreapp2.1\publish\'
   name: Botyara.Console
 environment:
   vk_api_token:
