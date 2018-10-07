@@ -21,5 +21,7 @@ deploy:
   username: vladislav
   password:
     secure: Ms8unA4ChOoYMeatsRrA/g==
-  folder: /home/vladislav/Botyara
-  artifact: Botyara_All_Files
+  folder: Botyara
+  application: Botyara_All_Files
+  on:
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
