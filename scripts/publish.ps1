@@ -1,1 +1,1 @@
-dotnet publish
+dotnet publish --runtime $env:vps_platform
