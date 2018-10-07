@@ -12,4 +12,14 @@ test_script:
 - pwsh: scripts/test.ps1
 artifacts:
 - path: '\'
-name: Botyara_All_Files
+  name: Botyara_All_Files
+deploy:
+- provider: FTP
+  host: 
+    secure: tgFBLOzwRuRs8x/0Mq7WEw==
+  protocol: sftp
+  username: vladislav
+  password:
+    secure: Ms8unA4ChOoYMeatsRrA/g==
+  folder: /home/vladislav/Botyara
+  artifact: Botyara_All_Files
