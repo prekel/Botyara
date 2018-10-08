@@ -16,24 +16,25 @@ namespace Botyara.Console
 //			var t = c.Get();
 //			var q1 = (from i in t.Timetable where i.Day == 5 && i.Week == 1 select i.Subject).ToList();
 //		
-//			string token; 
-//			using (var r = new StreamReader("token.txt"))
-//			{
-//				token = r.ReadLine();
-//			}
-//			var auth = new Authorizer(token);
+			string token; 
+			using (var r = new StreamReader("token.txt"))
+			{
+				token = r.ReadLine();
+			}
+			var auth = new Authorizer(token);
 //			var t1 = new Test(auth.Api);
 //			t1.Run();
 			
-			var lp = new LongPoller();
+			var lp = new LongPoller(auth.Api, 172122256);
 			lp.ResponseReceived += LpOnResponseReceived;
+			lp.Start();
 			lp.Run();
 		}
 
 		private static void LpOnResponseReceived(object sender, EventArgs e)
 		{
-			var lpe = (LongPoller.LongPollResponseEventArgs) e;
-			WriteLine(lpe.Time);
+			var lpe = (LongPollResponseEventArgs) e;
+			WriteLine(lpe.Response.RawJson);
 		}
 	}
 }
