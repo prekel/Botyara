@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using VkNet;
 using VkNet.Enums.SafetyEnums;
 using VkNet.Model.RequestParams;
@@ -15,11 +17,14 @@ namespace Botyara.Core
 		public VkApi Api { get; private set; }
 		public LongPoller LongPoller { get; private set; }
 
-		public Test(VkApi api, LongPoller lp)
+		public string Target { get; private set; }
+
+		public Test(VkApi api, LongPoller lp, string target)
 		{
 			Api = api;
 			LongPoller = lp;
 			lp.ResponseReceived += LpOnResponseReceived;
+			Target = target;
 		}
 
 		private void LpOnResponseReceived(object sender, EventArgs e)
@@ -29,16 +34,21 @@ namespace Botyara.Core
 			var resp1 = lpe.Response;
 
 			Console.WriteLine(resp.RawJson);
-			
-			if (resp.ContainsKey("failed"))
+
+			if (resp1.Failed != null)
 			{
 				LongPoller.Start();
+				return;
+			}
+
+			if (resp1.Updates.Count == 0)
+			{
+				return;
 			}
 
 			try
 			{
-				var respmsg = resp["updates"][0]["object"]["text"];
-				var msg = respmsg.ToString();
+				var msg = resp1.Updates[0].Object.Text;
 
 				var spl = msg.Split();
 				var a = 0;
@@ -51,64 +61,20 @@ namespace Botyara.Core
 				var t = c.Get();
 				msg = String.Join(", ", from i in t.Timetable where i.Day == a && i.Week == b select i.Subject);
 
-				var typ = resp["updates"][0]["type"];
+				var typ = resp1.Updates[0].Type;
 				if (msg != "" && typ == "message_new")
 				{
 					Api.Messages.Send(new MessagesSendParams
 					{
-						PeerId = Int64.Parse(resp["updates"][0]["object"]["peer_id"]),
+						PeerId = resp1.Updates[0].Object.PeerId,
 						Message = msg
 					});
 				}
-
 			}
 			catch (Exception ex)
 			{
 				Console.WriteLine(ex);
 			}
-		}
-
-		public void Run()
-		{
-//			var resp = Api.CallLongPoll(srv.Server, new VkNet.Utils.VkParameters(d));
-//
-//				Console.WriteLine(resp.RawJson.ToString());
-//
-//				try
-//				{
-//					var respmsg = resp["updates"][0]["object"]["text"];
-//					var msg = respmsg.ToString();
-//
-//					var spl = msg.ToString().Split();
-//					var a = 0;
-//					var b = 0;
-//					if (spl.Length == 2)
-//					{
-//						a = Int32.Parse(spl[0]);
-//						b = Int32.Parse(spl[1]);
-//						var c = new TimetableBuilder("КИ18-17/1б");
-//						var t = c.Get();
-//						msg = String.Join(", ", from i in t.Timetable where i.Day == a && i.Week == b select i.Subject);
-//
-//						var typ = resp["updates"][0]["type"];
-//						if (msg != "" && typ == "message_new")
-//						{
-//							Api.Messages.Send(new MessagesSendParams
-//							{
-//								PeerId = Int64.Parse(resp["updates"][0]["object"]["peer_id"]),
-//								Message = msg
-//							});
-//						}
-//					}
-//
-//				}
-//				catch (Exception e)
-//				{
-//					Console.WriteLine(e);
-//				}
-//
-//				d["ts"] = resp["ts"];
-//			}
 		}
 	}
 }

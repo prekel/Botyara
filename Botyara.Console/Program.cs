@@ -27,7 +27,7 @@ namespace Botyara.Console
 			lp.Start();
 			lp.Run();
 			
-			var t1 = new Test(auth.Api, lp);
+			var t1 = new Test(auth.Api, lp, "КИ18-17/1б");
 			//t1.Run();
 
 			while (true)

@@ -1,17 +1,18 @@
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Botyara.SfuApi
 {
+	[JsonObject]
 	public class StudyDay
 	{
-		public int Day { get; set; }
-		public int Week { get; set; }
-		public string Time { get; set; }
-		public string Subject { get; set; }
-		public string Type { get; set; }
-		public string Place { get; set; }
-
-		public string Teacher { get; set; }
-		public List<string> Groups { get; set; }
+		[JsonProperty("day")] public int Day { get; private set; }
+		[JsonProperty("week")] public int Week { get; private set; }
+		[JsonProperty("time")] public string Time { get; private set; }
+		[JsonProperty("subject")] public string Subject { get; private set; }
+		[JsonProperty("type")] public string Type { get; private set; }
+		[JsonProperty("place")] public string Place { get; private set; }
+		[JsonProperty("teacher")] public string Teacher { get; private set; }
+		[JsonProperty("groups")] public List<string> Groups { get; private set; }
 	}
 }
