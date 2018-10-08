@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using VkNet;
 using VkNet.Enums.SafetyEnums;
 using VkNet.Model.RequestParams;
@@ -57,11 +58,11 @@ namespace Botyara.Core
 			handler?.Invoke(this, e);
 		}
 
-		public void Run()
+		public async void Run()
 		{
 			while (true)
 			{
-				var resp = Api.CallLongPoll(LongPoolServer.Server, new VkNet.Utils.VkParameters(Params));
+				var resp = await Api.CallLongPollAsync(LongPoolServer.Server, new VkNet.Utils.VkParameters(Params));
 				OnResponseReceived(new LongPollResponseEventArgs(resp));
 				Params["ts"] = resp["ts"];
 			}

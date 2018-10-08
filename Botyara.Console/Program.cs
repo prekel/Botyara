@@ -2,6 +2,7 @@
 using System.IO;
 using Botyara.Console;
 using System.Linq;
+using System.Threading;
 using Botyara.SfuApi;
 using Botyara.Core;
 using static System.Console;
@@ -29,6 +30,8 @@ namespace Botyara.Console
 			lp.ResponseReceived += LpOnResponseReceived;
 			lp.Start();
 			lp.Run();
+			
+			Thread.Sleep(1000000);
 		}
 
 		private static void LpOnResponseReceived(object sender, EventArgs e)
