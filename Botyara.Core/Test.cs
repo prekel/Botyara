@@ -24,7 +24,9 @@ namespace Botyara.Core
 
 		private void LpOnResponseReceived(object sender, EventArgs e)
 		{
-			var resp = ((LongPollResponseEventArgs) e).Response;
+			var lpe = (LongPollResponseEventArgs) e;
+			var resp = lpe.RawResponse;
+			var resp1 = lpe.Response;
 
 			Console.WriteLine(resp.RawJson);
 			

@@ -39,7 +39,7 @@ namespace Botyara.Console
 		private static void LpOnResponseReceived(object sender, EventArgs e)
 		{
 			var lpe = (LongPollResponseEventArgs) e;
-			WriteLine(lpe.Response.RawJson);
+			WriteLine(lpe.RawResponse.RawJson);
 		}
 	}
 }

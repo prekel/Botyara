@@ -14,11 +14,13 @@ namespace Botyara.Core
 {
 	public class LongPollResponseEventArgs : EventArgs
 	{
-		public VkResponse Response { get; }
+		public VkResponse RawResponse { get; }
+		public Response.Response Response { get; }
 
-		public LongPollResponseEventArgs(VkResponse resp)
+		public LongPollResponseEventArgs(VkResponse rawresp)
 		{
-			Response = resp;
+			RawResponse = rawresp;
+			Response = JsonConvert.DeserializeObject<Botyara.Core.Response.Response>(rawresp.RawJson);
 		}
 	}
 
