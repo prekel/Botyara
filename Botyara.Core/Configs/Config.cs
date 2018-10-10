@@ -10,6 +10,9 @@ namespace Botyara.Core.Configs
 		public string AccessToken { get; set; }
 		
 		[JsonProperty]
+		public ulong GroupId { get; set; }
+		
+		[JsonProperty]
 		public IList<ChatConfig> ChatConfigs { get; set; }
 	}
 }
