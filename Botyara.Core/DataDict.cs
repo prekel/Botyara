@@ -18,7 +18,9 @@ namespace Botyara.Core
 		public int CurrentLessonNumber { get; set; }
 
 		public IList<StudyLesson> CurrentDay =>
-			(from value in Timetables[CurrentTarget].Timetable where value.Day == Day && value.Week == Week select value).ToList();
+			(from value in Timetables[CurrentTarget].Timetable
+				where value.Day == Day && value.Week == Week
+				select value).ToList();
 
 		public StudyLesson CurrentLesson => CurrentDay[CurrentLessonNumber];
 
@@ -102,6 +104,26 @@ namespace Botyara.Core
 			return CurrentLesson.Time;
 		}
 
+		private string c_Subject()
+		{
+			return CurrentLesson.Subject;
+		}
+
+		private string c_Type()
+		{
+			return CurrentLesson.Type;
+		}
+
+		private string c_Teacher()
+		{
+			return CurrentLesson.Teacher;
+		}
+
+		private string c_Place()
+		{
+			return CurrentLesson.Place;
+		}
+
 		public object this[string key]
 		{
 			get
@@ -118,6 +140,14 @@ namespace Botyara.Core
 						return c_NumberInOrder();
 					case "Time":
 						return c_Time();
+					case "Subject":
+						return c_Subject();
+					case "Type":
+						return c_Type();
+					case "Teacher":
+						return c_Teacher();
+					case "Place":
+						return c_Place();
 					default:
 						throw new NotImplementedException();
 				}
