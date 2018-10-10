@@ -10,10 +10,17 @@ namespace Botyara.Core
 	{
 		public ChatConfig Config { get; private set; }
 		public StudyTimetable Timetable { get; private set; }
+		public int Day { get; private set; }
+		public int OddEvenWeek { get; private set; }
+		public int CurrentTarget { get; set; }
+		public int CurrentLesson { get; set; }
 		
-		public DataDict(ChatConfig config, StudyTimetable timetable)
+		public DataDict(ChatConfig config, StudyTimetable timetable, int day, int oddevenweek)
 		{
-			
+			Config = config;
+			Timetable = timetable;
+			Day = day;
+			OddEvenWeek = oddevenweek;
 		}
 		
 		public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
@@ -81,11 +88,15 @@ namespace Botyara.Core
 		{
 			get
 			{
-				if (key == "OddEvenDayVinPod")
+				switch (key)
 				{
-					
+					case "OddEvenDayVinPod":
+						return 1;
+					case "NumberInOrder":
+						return 2;
+					default:
+						throw new NotImplementedException();
 				}
-				throw new NotImplementedException();
 			}
 			set => throw new NotImplementedException();
 		}
