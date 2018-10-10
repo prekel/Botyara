@@ -4,10 +4,10 @@ using Newtonsoft.Json;
 namespace Botyara.SfuApi
 {
 	[JsonObject]
-	public class StudyDay
+	public class StudyLesson
 	{
-		[JsonProperty("day")] public int Day { get; private set; }
-		[JsonProperty("week")] public int Week { get; private set; }
+		[JsonProperty("day")] public Day Day { get; private set; }
+		[JsonProperty("week")] public Week Week { get; private set; }
 		[JsonProperty("time")] public string Time { get; private set; }
 		[JsonProperty("subject")] public string Subject { get; private set; }
 		[JsonProperty("type")] public string Type { get; private set; }
