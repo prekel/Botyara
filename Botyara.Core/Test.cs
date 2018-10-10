@@ -59,7 +59,7 @@ namespace Botyara.Core
 
 				var c = new TimetableBuilder("КИ18-17/1б");
 				var t = c.Get();
-				msg = String.Join(", ", from i in t.Timetable where i.Day == a && i.Week == b select i.Subject);
+				msg = String.Join(", ", from i in t.Timetable where (int)i.Day == a && (int)i.Week == b select i.Subject);
 
 				var typ = resp1.Updates[0].Type;
 				if (msg != "" && typ == "message_new")
