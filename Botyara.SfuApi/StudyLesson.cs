@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace Botyara.SfuApi
 {
 	[JsonObject]
-	public class StudyDay
+	public class StudyLesson
 	{
 		[JsonProperty("day")] public Day Day { get; private set; }
 		[JsonProperty("week")] public Week Week { get; private set; }

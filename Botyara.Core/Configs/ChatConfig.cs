@@ -26,14 +26,14 @@ namespace Botyara.Core.Configs
 		public string FirstString { get; set; }
 		
 		/// <summary>
-		/// "Группа {TargetId}"
+		/// "Группа {TargetsList}"
 		/// Группа КИ18-17/1б:
 		/// </summary>
 		[JsonProperty]
 		public string SecondString { get; set; }
 		
 		/// <summary>
-		/// "{Number}) {Time} {Subject} ({Type}) {Teacher} {Place}"
+		/// "{NumberInTimetable}) {Time} {Subject} ({Type}) {Teacher} {Place}"
 		/// 2) 10:15-11:50 Основы программирования (практика) Грузенкин Д. В. УЛК423
 		/// </summary>
 		[JsonProperty]

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Botyara.Core.Configs;
 using Botyara.SfuApi;
 
@@ -9,23 +10,97 @@ namespace Botyara.Core
 	public class DataDict : IDictionary<string, object>
 	{
 		public ChatConfig Config { get; private set; }
-		public StudyTimetable Timetable { get; private set; }
+		public IDictionary<string, StudyTimetable> Timetables { get; private set; }
 		public Day Day { get; private set; }
 		public Week Week { get; private set; }
 
-		public int CurrentTarget { get; set; }
-		public int CurrentLesson { get; set; }
+		public string CurrentTarget { get; set; }
+		public int CurrentLessonNumber { get; set; }
 
-		public DataDict(ChatConfig config, StudyTimetable timetable, Day day, Week week)
+		public IList<StudyLesson> CurrentDay =>
+			(from value in Timetables[CurrentTarget].Timetable where value.Day == Day && value.Week == Week select value).ToList();
+
+		public StudyLesson CurrentLesson => CurrentDay[CurrentLessonNumber];
+
+		public DataDict(ChatConfig config, StudyTimetable timetables, Day day, Week week)
 		{
 			Config = config;
-			Timetable = timetable;
+			Timetables = timetables;
 			Day = day;
 			Week = week;
 		}
 
 		public int Count { get; }
 		public bool IsReadOnly { get; } = true;
+
+		private string c_OddEvenDayVinPod()
+		{
+			switch (Week)
+			{
+				case Week.Even when Day == Day.Monday:
+					return "чётный понедельник";
+				case Week.Even when Day == Day.Tuesday:
+					return "чётный вторник";
+				case Week.Even when Day == Day.Wednesday:
+					return "чётную среду";
+				case Week.Even when Day == Day.Thursday:
+					return "чётный четверг";
+				case Week.Even when Day == Day.Friday:
+					return "чётную пятницу";
+				case Week.Even when Day == Day.Saturday:
+					return "чётную субботу";
+				case Week.Even when Day == Day.Sunday:
+					return "чётное воскресенья";
+				case Week.Odd when Day == Day.Monday:
+					return "нечётный понедельник";
+				case Week.Odd when Day == Day.Tuesday:
+					return "нечётный вторник";
+				case Week.Odd when Day == Day.Wednesday:
+					return "нечётную среду";
+				case Week.Odd when Day == Day.Thursday:
+					return "нечётный четверг";
+				case Week.Odd when Day == Day.Friday:
+					return "нечётную пятницу";
+				case Week.Odd when Day == Day.Saturday:
+					return "нечётную субботу";
+				case Week.Odd when Day == Day.Sunday:
+					return "нечётное воскресенья";
+			}
+		}
+
+		private string c_TargetsList()
+		{
+			return String.Join(", ", Config.Targets);
+		}
+
+		private int c_NumberInTimetable()
+		{
+			var time = CurrentLesson.Time;
+			if (time == "08:30-10:05")
+				return 1;
+			if (time == "10:15-11:50")
+				return 2;
+			if (time == "12:00-13:35")
+				return 3;
+			if (time == "14:10-15:45")
+				return 4;
+			if (time == "15:55-17:30")
+				return 5;
+			if (time == "17:40-19:15")
+				return 6;
+			if (time == "19:25-21:00")
+				return 7;
+		}
+
+		private int c_NumberInOrder()
+		{
+			return CurrentLessonNumber;
+		}
+
+		private string c_Time()
+		{
+			return CurrentLesson.Time;
+		}
 
 		public object this[string key]
 		{
@@ -34,9 +109,15 @@ namespace Botyara.Core
 				switch (key)
 				{
 					case "OddEvenDayVinPod":
-						return 1;
+						return c_OddEvenDayVinPod();
+					case "TargetsList":
+						return c_TargetsList();
+					case "NumberInTimetable":
+						return c_NumberInTimetable();
 					case "NumberInOrder":
-						return 2;
+						return c_NumberInOrder();
+					case "Time":
+						return c_Time();
 					default:
 						throw new NotImplementedException();
 				}
