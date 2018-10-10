@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text;
 using Botyara.Core.Configs;
 using Botyara.SfuApi;
@@ -22,8 +23,14 @@ namespace Botyara.Core
 		/// <param name="week">1 - нечётная, 2 - чётная</param>
 		public string Compile(Day day, Week week)
 		{
-			var tb = new TimetableBuilder(Config.Targets[0]);
-			var tm = tb.Get();
+			var timetables = new Dictionary<string, StudyTimetable>();
+			foreach (var i in Config.Targets)
+			{
+				var tb = new TimetableBuilder(i);
+                timetables.Add(i, tb.Get());
+			}
+			
+			var data = new DataDict(Config, timetables, day, week);
 			
 			var sb = new StringBuilder();
 			sb.AppendLine(Config.FirstString);
