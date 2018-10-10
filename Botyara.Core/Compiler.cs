@@ -19,8 +19,8 @@ namespace Botyara.Core
 		/// Составляет расписание
 		/// </summary>
 		/// <param name="day">Номер дня недели, пн - 1, вс - 7</param>
-		/// <param name="oddevenweek">1 - нечётная, 2 - чётная</param>
-		public string Compile(int day, int oddevenweek)
+		/// <param name="week">1 - нечётная, 2 - чётная</param>
+		public string Compile(Day day, Week week)
 		{
 			var tb = new TimetableBuilder(Config.Targets[0]);
 			var tm = tb.Get();

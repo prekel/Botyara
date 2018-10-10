@@ -10,17 +10,18 @@ namespace Botyara.Core
 	{
 		public ChatConfig Config { get; private set; }
 		public StudyTimetable Timetable { get; private set; }
-		public int Day { get; private set; }
-		public int OddEvenWeek { get; private set; }
+		public Day Day { get; private set; }
+		public Week Week { get; private set; }
+		
 		public int CurrentTarget { get; set; }
 		public int CurrentLesson { get; set; }
 		
-		public DataDict(ChatConfig config, StudyTimetable timetable, int day, int oddevenweek)
+		public DataDict(ChatConfig config, StudyTimetable timetable, Day day, Week week)
 		{
 			Config = config;
 			Timetable = timetable;
 			Day = day;
-			OddEvenWeek = oddevenweek;
+			Week = week;
 		}
 		
 		public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
