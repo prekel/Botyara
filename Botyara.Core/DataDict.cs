@@ -24,7 +24,7 @@ namespace Botyara.Core
 
 		public StudyLesson CurrentLesson => CurrentDay[CurrentLessonNumber];
 
-		public DataDict(ChatConfig config, StudyTimetable timetables, Day day, Week week)
+		public DataDict(ChatConfig config, IDictionary<string, StudyTimetable> timetables, Day day, Week week)
 		{
 			Config = config;
 			Timetables = timetables;
@@ -67,6 +67,8 @@ namespace Botyara.Core
 					return "нечётную субботу";
 				case Week.Odd when Day == Day.Sunday:
 					return "нечётное воскресенья";
+				default:
+					throw new ArgumentOutOfRangeException();
 			}
 		}
 
@@ -92,6 +94,7 @@ namespace Botyara.Core
 				return 6;
 			if (time == "19:25-21:00")
 				return 7;
+			return 0;
 		}
 
 		private int c_NumberInOrder()
