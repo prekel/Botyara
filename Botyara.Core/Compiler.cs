@@ -10,7 +10,7 @@ namespace Botyara.Core
 	public class Compiler
 	{
 		public ChatConfig Config { get; private set; }
-		
+
 		public Compiler(ChatConfig config)
 		{
 			Config = config;
@@ -27,15 +27,30 @@ namespace Botyara.Core
 			foreach (var i in Config.Targets)
 			{
 				var tb = new TimetableBuilder(i);
-                timetables.Add(i, tb.Get());
+				timetables.Add(i, tb.Get());
 			}
-			
+
 			var data = new DataDict(Config, timetables, day, week);
-			
+
+			var form = new Formatter(data);
+
 			var sb = new StringBuilder();
-			sb.AppendLine(Config.FirstString);
-			
-			throw new NotImplementedException();
+
+			sb.AppendLine(form.Format(Config.FirstString));
+
+			for (var i = 0; i < Config.Targets.Count; i++)
+			{
+				data.CurrentTarget = Config.Targets[i];
+				sb.AppendLine(form.Format(Config.SecondString));
+				var n = data.CurrentDay.Count;
+				for (var j = 0; j < n; j++)
+				{
+					data.CurrentLessonNumber = j + 1;
+					sb.AppendLine(form.Format(Config.LessonString));
+				}
+			}
+
+			return sb.ToString();
 		}
 	}
 }

@@ -22,7 +22,7 @@ namespace Botyara.Core
 				where value.Day == Day && value.Week == Week
 				select value).ToList();
 
-		public StudyLesson CurrentLesson => CurrentDay[CurrentLessonNumber];
+		public StudyLesson CurrentLesson => CurrentDay[CurrentLessonNumber - 1];
 
 		public DataDict(ChatConfig config, IDictionary<string, StudyTimetable> timetables, Day day, Week week)
 		{
