@@ -27,7 +27,7 @@ namespace Botyara.Core
 	public class LongPoller
 	{
 		public VkApi Api { get; private set; }
-		public long GroupId { get; private set; }
+		public ulong GroupId { get; private set; }
 
 		private LongPollServerResponse LongPoolServer { get; set; }
 		private IDictionary<string, string> Params { get; set; }
@@ -35,7 +35,7 @@ namespace Botyara.Core
 		public event EventHandler ResponseReceived;
 
 
-		public LongPoller(VkApi api, long gpoupid)
+		public LongPoller(VkApi api, ulong gpoupid)
 		{
 			Api = api;
 			GroupId = gpoupid;
@@ -43,7 +43,7 @@ namespace Botyara.Core
 
 		public void Start()
 		{
-			LongPoolServer = Api.Groups.GetLongPollServer(172122256);
+			LongPoolServer = Api.Groups.GetLongPollServer(GroupId);
 
 			Params = new Dictionary<string, string>
 			{
