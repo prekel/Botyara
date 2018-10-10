@@ -9,7 +9,7 @@ namespace Botyara.Core.Response
 	{
 		[JsonProperty("date")] public long Date { get; private set; }
 
-		[JsonProperty("from_id")] public long FronId { get; private set; }
+		[JsonProperty("from_id")] public long FromId { get; private set; }
 
 		[JsonProperty("id")] public long Id { get; private set; }
 
