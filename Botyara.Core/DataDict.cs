@@ -72,6 +72,11 @@ namespace Botyara.Core
 			}
 		}
 
+		private string c_Target()
+		{
+			return CurrentTarget;
+		}
+
 		private string c_TargetsList()
 		{
 			return String.Join(", ", Config.Targets);
@@ -135,6 +140,8 @@ namespace Botyara.Core
 				{
 					case "OddEvenDayVinPod":
 						return c_OddEvenDayVinPod();
+					case "Target":
+						return c_Target();
 					case "TargetsList":
 						return c_TargetsList();
 					case "NumberInTimetable":

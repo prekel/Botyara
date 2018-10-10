@@ -22,7 +22,7 @@ namespace Botyara.Core.Tests
 			Config1 = new ChatConfig
 			{
 				FirstString = "Расписание на {OddEvenDayVinPod}:",
-				SecondString = "Группа {TargetsList}:",
+				SecondString = "Группа {Target}:",
 				LessonString = "{NumberInTimetable}) {Time} {Subject} ({Type}) {Teacher} {Place}",
 				NoLessons = "Нет пар",
 				PeerId = 0,
@@ -33,13 +33,13 @@ namespace Botyara.Core.Tests
 			Config2 = new ChatConfig
 			{
 				FirstString = "Расписание на {OddEvenDayVinPod}:",
-				SecondString = "Группа {TargetsList}:",
+				SecondString = "Группа {Target}:",
 				LessonString = "{NumberInTimetable}) {Time} {Subject} ({Type}) {Teacher} {Place}",
 				NoLessons = "Нет пар",
 				PeerId = 0,
-				Targets = new List<string>(new[] {"КИ18-17/1б"})
+				Targets = new List<string>(new[] {"КИ18-17/1б", "КИ18-17/2б"})
 			};
-			Compiler2 = new Compiler(Config1);
+			Compiler2 = new Compiler(Config2);
 		}
 
 		[Test]
