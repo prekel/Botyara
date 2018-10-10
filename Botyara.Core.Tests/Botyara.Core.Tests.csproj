@@ -13,4 +13,8 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Botyara.Core\Botyara.Core.csproj" />
+  </ItemGroup>
+
 </Project>
