@@ -11,7 +11,7 @@ namespace Botyara.Core.Tests
 	public class CompilerTests
 	{
 		private ChatConfig Config { get; set; }
-		private Compiler Compiler{ get; set; }
+		private Compiler Compiler { get; set; }
 
 		[SetUp]
 		public void Setup()
@@ -21,6 +21,7 @@ namespace Botyara.Core.Tests
 				FirstString = "Расписание на {OddEvenDayVinPod}:",
 				SecondString = "Группа {TargetsList}:",
 				LessonString = "{NumberInTimetable}) {Time} {Subject} ({Type}) {Teacher} {Place}",
+				NoLessons = "Нет пар",
 				PeerId = 0,
 				Targets = new List<string>(new[] {"КИ18-17/1б"})
 			};
@@ -35,6 +36,17 @@ namespace Botyara.Core.Tests
 Группа КИ18-17/1б:
 1) 08:30-10:05 Введение в инженерную деятельность (практика) Пересунько П. В. пр./УЛК410, УЛК306
 2) 10:15-11:50 Основы программирования (практика) Грузенкин Д. В. УЛК423
+";
+			Assert.AreEqual(exc, res);
+		}
+
+		[Test]
+		public void Test32()
+		{
+			var res = Compiler.Compile(Day.Wednesday, Week.Even);
+			var exc = @"Расписание на чётную среду:
+Группа КИ18-17/1б:
+Нет пар
 ";
 			Assert.AreEqual(exc, res);
 		}

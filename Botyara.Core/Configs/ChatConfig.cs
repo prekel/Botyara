@@ -38,5 +38,8 @@ namespace Botyara.Core.Configs
 		/// </summary>
 		[JsonProperty]
 		public string LessonString { get; set; }
+		
+		[JsonProperty]
+		public string NoLessons { get; set; }
 	}
 }

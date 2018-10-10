@@ -42,7 +42,14 @@ namespace Botyara.Core
 			{
 				data.CurrentTarget = Config.Targets[i];
 				sb.AppendLine(form.Format(Config.SecondString));
+
 				var n = data.CurrentDay.Count;
+				if (n == 0)
+				{
+					sb.AppendLine(form.Format(Config.NoLessons));
+					continue;
+				}
+
 				for (var j = 0; j < n; j++)
 				{
 					data.CurrentLessonNumber = j + 1;
