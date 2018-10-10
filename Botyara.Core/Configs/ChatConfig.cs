@@ -26,7 +26,7 @@ namespace Botyara.Core.Configs
 		public string FirstString { get; set; }
 		
 		/// <summary>
-		/// "Группа {TargetsList}"
+		/// "Группа {TargetsList}:"
 		/// Группа КИ18-17/1б:
 		/// </summary>
 		[JsonProperty]
