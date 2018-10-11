@@ -29,8 +29,8 @@ deploy:
   username: vladislav
   password:
     secure: Ms8unA4ChOoYMeatsRrA/g==
-  folder: Botyara
+  folder: Botyara/Botyara-$assembly_version
   application: Botyara.Console
   on:
     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    APPVEYOR_REPO_TAG : true
+#    APPVEYOR_REPO_TAG : true
