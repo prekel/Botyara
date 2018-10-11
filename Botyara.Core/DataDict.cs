@@ -66,7 +66,7 @@ namespace Botyara.Core
 				case Week.Odd when Day == Day.Saturday:
 					return "нечётную субботу";
 				case Week.Odd when Day == Day.Sunday:
-					return "нечётное воскресенья";
+					return "нечётное воскресенье";
 				default:
 					throw new ArgumentOutOfRangeException();
 			}
