@@ -37,35 +37,40 @@ namespace Botyara.Core
 
 		private string c_OddEvenDayVinPod()
 		{
-			switch (Week)
+			return DayNameVinPod(Day, Week);
+		}
+
+		public static string DayNameVinPod(Day day, Week week)
+		{
+			switch (week)
 			{
-				case Week.Even when Day == Day.Monday:
+				case Week.Even when day == Day.Monday:
 					return "чётный понедельник";
-				case Week.Even when Day == Day.Tuesday:
+				case Week.Even when day == Day.Tuesday:
 					return "чётный вторник";
-				case Week.Even when Day == Day.Wednesday:
+				case Week.Even when day == Day.Wednesday:
 					return "чётную среду";
-				case Week.Even when Day == Day.Thursday:
+				case Week.Even when day == Day.Thursday:
 					return "чётный четверг";
-				case Week.Even when Day == Day.Friday:
+				case Week.Even when day == Day.Friday:
 					return "чётную пятницу";
-				case Week.Even when Day == Day.Saturday:
+				case Week.Even when day == Day.Saturday:
 					return "чётную субботу";
-				case Week.Even when Day == Day.Sunday:
+				case Week.Even when day == Day.Sunday:
 					return "чётное воскресенья";
-				case Week.Odd when Day == Day.Monday:
+				case Week.Odd when day == Day.Monday:
 					return "нечётный понедельник";
-				case Week.Odd when Day == Day.Tuesday:
+				case Week.Odd when day == Day.Tuesday:
 					return "нечётный вторник";
-				case Week.Odd when Day == Day.Wednesday:
+				case Week.Odd when day == Day.Wednesday:
 					return "нечётную среду";
-				case Week.Odd when Day == Day.Thursday:
+				case Week.Odd when day == Day.Thursday:
 					return "нечётный четверг";
-				case Week.Odd when Day == Day.Friday:
+				case Week.Odd when day == Day.Friday:
 					return "нечётную пятницу";
-				case Week.Odd when Day == Day.Saturday:
+				case Week.Odd when day == Day.Saturday:
 					return "нечётную субботу";
-				case Week.Odd when Day == Day.Sunday:
+				case Week.Odd when day == Day.Sunday:
 					return "нечётное воскресенье";
 				default:
 					throw new ArgumentOutOfRangeException();
