@@ -38,9 +38,9 @@ namespace Botyara.Core
 
 			sb.AppendLine(form.Format(Config.FirstString));
 
-			for (var i = 0; i < Config.Targets.Count; i++)
+			foreach (var i in Config.Targets)
 			{
-				data.CurrentTarget = Config.Targets[i];
+				data.CurrentTarget = i;
 				sb.AppendLine(form.Format(Config.SecondString));
 
 				var n = data.CurrentDay.Count;
