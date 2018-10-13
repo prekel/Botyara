@@ -8,8 +8,17 @@ using static System.Console;
 using Botyara.SfuApi;
 using Botyara.Core;
 using Botyara.Core.Configs;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using NLog.Extensions.Logging;
 using VkNet.Enums;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using NLog;
+using NLog.Extensions.Logging;
+using System;
+using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace Botyara.Console
 {
@@ -76,6 +85,8 @@ namespace Botyara.Console
 			lp.Start();
 			lp.Run();
 
+			var serviceProvider = BuildDi<Answerer>();
+			var t2 = serviceProvider.  GetRequiredService<Answerer>();
 			var t1 = new Answerer(auth.Api, lp, Config);
 
 			while (true)
@@ -88,6 +99,29 @@ namespace Botyara.Console
 		{
 			var lpe = (LongPollResponseEventArgs) e;
 			WriteLine(lpe.RawResponse.RawJson);
+		}
+		
+		private static IServiceProvider BuildDi<T>()
+			where T : class
+		{
+			var services = new ServiceCollection();
+
+			//Runner is the custom class
+			services.AddTransient<T>();
+
+			services.AddSingleton<ILoggerFactory, LoggerFactory>();
+			services.AddSingleton(typeof(ILogger<>), typeof(Logger<>));
+			services.AddLogging(builder => builder.SetMinimumLevel(LogLevel.Trace));
+     
+			var serviceProvider = services.BuildServiceProvider();
+
+			var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+
+			//configure NLog
+			loggerFactory.AddNLog(new NLogProviderOptions { CaptureMessageTemplates = true, CaptureMessageProperties =true });
+			NLog.LogManager.LoadConfiguration("nlog.config");
+
+			return serviceProvider;
 		}
 	}
 }

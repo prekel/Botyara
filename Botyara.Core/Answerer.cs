@@ -9,6 +9,8 @@ using VkNet;
 using VkNet.Enums.SafetyEnums;
 using VkNet.Model.RequestParams;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Logging;
+using NLog;
 using Botyara.SfuApi;
 
 namespace Botyara.Core
