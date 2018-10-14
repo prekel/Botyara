@@ -9,12 +9,16 @@ using VkNet;
 using VkNet.Enums.SafetyEnums;
 using VkNet.Model.RequestParams;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Logging;
+using NLog;
 using Botyara.SfuApi;
 
 namespace Botyara.Core
 {
 	public class Answerer
 	{
+		private static Logger Log { get; } = LogManager.GetCurrentClassLogger();
+		
 		public VkApi Api { get; private set; }
 		public LongPoller LongPoller { get; private set; }
 		public Config Config { get; private set; }
@@ -25,6 +29,7 @@ namespace Botyara.Core
 			LongPoller = lp;
 			lp.ResponseReceived += LpOnResponseReceived;
 			Config = config;
+			Log.Debug("Создан Answerer");
 		}
 
 		private void LpOnResponseReceived(object sender, EventArgs e)
@@ -33,10 +38,12 @@ namespace Botyara.Core
 			var resp = lpe.RawResponse;
 			var resp1 = lpe.Response;
 
-			Console.WriteLine(resp.RawJson);
+			//Console.WriteLine(resp.RawJson);
+			Log.Trace(resp.RawJson.TrimEnd());
 
 			if (resp1.Failed != null)
 			{
+				Log.Warn("Ошибка сервера, перезапуск");
 				LongPoller.Start();
 				return;
 			}
@@ -48,33 +55,41 @@ namespace Botyara.Core
 
 			try
 			{
+				if (resp1.Updates[0].Type != "message_new") return;
 				var msg = resp1.Updates[0].Object;
 				var msgtext = msg.Text;
-
+				if (msgtext == "") return;
+				
 				var spl = msgtext.Split();
 				var a = 0;
 				var b = 0;
 				if (spl.Length != 2) return;
-				a = Int32.Parse(spl[0]);
-				b = Int32.Parse(spl[1]);
+				try
+				{
+					a = Int32.Parse(spl[0]);
+					b = Int32.Parse(spl[1]);
+				}
+				catch
+				{
+					return;
+				}
 
-				var chatconf = (from i in Config.ChatConfigs where i.PeerId == msg.PeerId select i).First();
-				var compiler = new Compiler(chatconf);
+				var chatConfig = (from i in Config.ChatConfigs where i.PeerId == msg.PeerId select i).First();
+				var compiler = new Compiler(chatConfig);
 				var ans = compiler.Compile((Day) a, (Week) b);
 
-				var typ = resp1.Updates[0].Type;
-				if (msgtext != "" && typ == "message_new")
+				Log.Trace($"Ответ сформирован:\n{ans.TrimEnd()}");
+				Api.Messages.Send(new MessagesSendParams
 				{
-					Api.Messages.Send(new MessagesSendParams
-					{
-						PeerId = msg.PeerId,
-						Message = ans
-					});
-				}
+					PeerId = msg.PeerId,
+					Message = ans
+				});
+				Log.Debug("Отвечено");
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine(ex);
+				Log.Warn(ex);
+				//Console.WriteLine(ex);
 			}
 		}
 		

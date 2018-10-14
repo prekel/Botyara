@@ -29,7 +29,7 @@ deploy:
   username: vladislav
   password:
     secure: Ms8unA4ChOoYMeatsRrA/g==
-  folder: Botyara
+  folder: Botyara\Botyara-$(APPVEYOR_BUILD_VERSION)
   application: Botyara.Console
   on:
     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
