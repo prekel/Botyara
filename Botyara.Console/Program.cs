@@ -120,6 +120,7 @@ namespace Botyara.Console
 		{
 			Log.Info("Завершение програмы");
 			LogManager.Shutdown();
+			Environment.Exit(0);
 		}
 
 		private static void LpOnResponseReceived(object sender, EventArgs e)

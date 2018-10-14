@@ -6,18 +6,22 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <None Remove="NLog.config" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="NLog.config">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\Botyara.Core\Botyara.Core.csproj" />
       <ProjectReference Include="..\Botyara.SfuApi\Botyara.SfuApi.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="NLog" Version="4.5.10" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Update="NLog.config">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
     </ItemGroup>
 
 </Project>
