@@ -7,6 +7,7 @@ using VkNet;
 using VkNet.Enums.SafetyEnums;
 using VkNet.Model.RequestParams;
 using Newtonsoft.Json;
+using NLog;
 using VkNet.Model;
 using VkNet.Utils;
 
@@ -26,6 +27,8 @@ namespace Botyara.Core
 
 	public class LongPoller
 	{
+		private static Logger Log { get; } = LogManager.GetCurrentClassLogger();
+
 		public VkApi Api { get; private set; }
 		public ulong GroupId { get; private set; }
 
@@ -43,7 +46,10 @@ namespace Botyara.Core
 
 		public void Start()
 		{
+			Log.Debug("Получение LongPoolServer");
 			LongPoolServer = Api.Groups.GetLongPollServer(GroupId);
+			Log.Debug("Получен LongPoolServer");
+			//Log.Trace($"{LongPoolServer.Server} {LongPoolServer.Key} {LongPoolServer.Ts}");
 
 			Params = new Dictionary<string, string>
 			{
@@ -62,6 +68,7 @@ namespace Botyara.Core
 
 		public async void Run()
 		{
+			Log.Debug("Запущен LongPoolServer");
 			while (true)
 			{
 				var resp = await Api.CallLongPollAsync(LongPoolServer.Server, new VkNet.Utils.VkParameters(Params));
