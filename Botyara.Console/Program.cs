@@ -16,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog;
 using System;
+using System.Text;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace Botyara.Console
@@ -28,6 +29,9 @@ namespace Botyara.Console
 
 		public static void Main(string[] args)
 		{
+			LogManager.Configuration.Variables["starttime"] = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss-ffff");
+			OutputEncoding = Encoding.UTF8;
+			CancelKeyPress += Program_CancelKeyPress;
 			Log.Trace("1234");
 			Log.Info("1234");
 			Log.Debug("1234");
@@ -110,6 +114,12 @@ namespace Botyara.Console
 				Log.Debug("Приложение работает");
 				Thread.Sleep(300000);
 			}
+		}
+
+		private static void Program_CancelKeyPress(object sender, ConsoleCancelEventArgs e)
+		{
+			Log.Info("Завершение програмы");
+			LogManager.Shutdown();
 		}
 
 		private static void LpOnResponseReceived(object sender, EventArgs e)
