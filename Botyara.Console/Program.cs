@@ -38,6 +38,24 @@ namespace Botyara.Console
 			Log.Warn("1234");
 			Log.Error("1234");
 			Log.Fatal("1234");
+
+			Log.Trace("Black");
+			Log.Trace("Blue");
+			Log.Trace("Cyan");
+			Log.Trace("DarkBlue");
+			Log.Trace("DarkCyan");
+			Log.Trace("DarkGray");
+			Log.Trace("DarkGreen");
+			Log.Trace("DarkMagenta");
+			Log.Trace("DarkRed");
+			Log.Trace("DarkYellow");
+			Log.Trace("Gray");
+			Log.Trace("Green");
+			Log.Trace("Magenta");
+			Log.Trace("Red");
+			Log.Trace("White");
+			Log.Trace("Yellow");
+			 
 			if (String.Join("; ", Directory.GetFiles(".")).Contains("config.json"))
 			{
 				Log.Info("Загружается конфирурация");
@@ -64,7 +82,7 @@ namespace Botyara.Console
 					target = ReadLine();
 					return true;
 				}
-				
+
 				Log.Info("Открывается диалог введения параметров");
 				var ret = Dialog();
 
@@ -75,13 +93,13 @@ namespace Botyara.Console
 					LessonString = "{NumberInTimetable}) {Time} {Subject} ({Type}) {Teacher} {Place}",
 					NoLessons = "Нет пар",
 					PeerId = 0,
-					Targets = new List<string>(new[] {target})
+					Targets = new List<string>(new[] { target })
 				};
 				Config = new Config
 				{
 					AccessToken = token,
 					GroupId = groupid,
-					ChatConfigs = new List<ChatConfig>(new[] {config1})
+					ChatConfigs = new List<ChatConfig>(new[] { config1 })
 				};
 
 				Log.Info("Сохраняется конфигурация");
@@ -108,7 +126,7 @@ namespace Botyara.Console
 
 			Log.Debug("Создание и старт Answerer");
 			var t1 = new Answerer(auth.Api, lp, Config);
-			
+
 			while (true)
 			{
 				Log.Debug("Приложение работает");
@@ -125,7 +143,7 @@ namespace Botyara.Console
 
 		private static void LpOnResponseReceived(object sender, EventArgs e)
 		{
-			var lpe = (LongPollResponseEventArgs) e;
+			var lpe = (LongPollResponseEventArgs)e;
 			WriteLine(lpe.RawResponse.RawJson);
 		}
 	}
