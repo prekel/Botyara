@@ -78,7 +78,7 @@ namespace Botyara.Core
 				var compiler = new Compiler(chatConfig);
 				var ans = compiler.Compile((Day) a, (Week) b);
 
-				Log.Trace($"Ответ сформирован:\n{ans.TrimEnd()}");
+				Log.Trace($"Ответ сформирован:\r\n{ans.Trim()}");
 				Api.Messages.Send(new MessagesSendParams
 				{
 					PeerId = msg.PeerId,
