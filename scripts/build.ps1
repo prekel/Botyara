@@ -1,1 +1,1 @@
-dotnet build /p:AssemblyVersion="$env:assembly_version" /verbosity:minimal /m
+dotnet build /p:AssemblyVersion="$env:APPVEYOR_BUILD_VERSION" /verbosity:minimal /m
