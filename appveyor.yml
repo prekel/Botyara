@@ -33,4 +33,4 @@ deploy:
   application: Botyara.Console
   on:
     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    APPVEYOR_REPO_TAG : true
+#    APPVEYOR_REPO_TAG : true
