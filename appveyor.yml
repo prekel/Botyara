@@ -16,7 +16,7 @@ artifacts:
 - path: '\'
   name: Botyara_All_Files
 - path: 'Botyara.Console\bin\Release\netcoreapp2.1\publish\'
-  name: Botyara.Console
+  name: Botyara-$(APPVEYOR_BUILD_VERSION)
 #environment:
 #  vk_api_token:
 #     secure: 6rzTkQTENJ8RBqdR6W58aFo4h9Ej4abx2AaKilwqNsnt3pvMUgGGvM0QlyXrIYcExeZmmbudDAn9pVjv3fu+6eGjBvS4bKCholJuWn99mjtlbDvcCBGtTd5/VTfVGhip
@@ -30,7 +30,7 @@ deploy:
   password:
     secure: Ms8unA4ChOoYMeatsRrA/g==
   folder: Botyara\Botyara-$(APPVEYOR_BUILD_VERSION)
-  application: Botyara.Console
+  application: Botyara-$(APPVEYOR_BUILD_VERSION)
   on:
     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
 #    APPVEYOR_REPO_TAG : true
