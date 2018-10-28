@@ -7,8 +7,8 @@ If ($env:APPVEYOR_BUILD_WORKER_IMAGE -eq "Visual Studio 2017")
 
 if ($env:APPVEYOR_REPO_COMMIT_MESSAGE.Contains("(deploy)")) 
 {
-    $env:SHOULD_DEPLOY = 'true'
+	Set-AppveyorBuildVariable 'SHOULD_DEPLOY' 'true'
 }
-$env:SHOULD_DEPLOY = 'true'
+
 
 Write-Host -Backgroundcolor DarkGreen -Foregroundcolor White "Assembly Version: $env:APPVEYOR_BUILD_VERSION"
