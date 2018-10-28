@@ -32,5 +32,6 @@ deploy:
   folder: Botyara\Botyara-$(APPVEYOR_BUILD_VERSION)
   application: Botyara-$(APPVEYOR_BUILD_VERSION)
   on:
-    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017 
+    need_deploy: True
 #    APPVEYOR_REPO_TAG : true
