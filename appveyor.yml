@@ -1,0 +1,37 @@
+version: 0.1.{build}
+image:
+- Visual Studio 2017
+- Ubuntu1804
+configuration: Release
+platform: Any CPU
+install:
+- pwsh: scripts/install.ps1
+build_script:
+- pwsh: scripts/build.ps1
+after_build:
+- pwsh: scripts/publish.ps1
+test_script:
+- pwsh: scripts/test.ps1
+artifacts:
+- path: '\'
+  name: Botyara_All_Files
+- path: 'Botyara.Console\bin\Release\netcoreapp2.1\publish\'
+  name: Botyara-$(APPVEYOR_BUILD_VERSION)
+#environment:
+#  vk_api_token:
+#     secure: 6rzTkQTENJ8RBqdR6W58aFo4h9Ej4abx2AaKilwqNsnt3pvMUgGGvM0QlyXrIYcExeZmmbudDAn9pVjv3fu+6eGjBvS4bKCholJuWn99mjtlbDvcCBGtTd5/VTfVGhip
+#  vps_platform: ubuntu.16.04-x64
+deploy:
+- provider: FTP
+  host: 
+    secure: tgFBLOzwRuRs8x/0Mq7WEw==
+  protocol: sftp
+  username: vladislav
+  password:
+    secure: Ms8unA4ChOoYMeatsRrA/g==
+  folder: Botyara\Botyara-$(APPVEYOR_BUILD_VERSION)
+  application: Botyara-$(APPVEYOR_BUILD_VERSION)
+  on:
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017 
+    SHOULD_DEPLOY: true
+#    APPVEYOR_REPO_TAG : true

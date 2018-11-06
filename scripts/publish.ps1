@@ -1,0 +1,1 @@
+dotnet publish /p:AssemblyVersion="$env:APPVEYOR_BUILD_VERSION"
