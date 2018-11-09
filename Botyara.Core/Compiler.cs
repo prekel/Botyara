@@ -7,10 +7,20 @@ using VkNet.Exception;
 
 namespace Botyara.Core
 {
+	/// <summary>
+	/// Представляет составитель отформатированного расписания
+	/// </summary>
 	public class Compiler
 	{
+		/// <summary>
+		/// Конфигурафия чата
+		/// </summary>
 		public ChatConfig Config { get; private set; }
 
+		/// <summary>
+		/// Создаёт составителя
+		/// </summary>
+		/// <param name="config">Конфигурация чата</param>
 		public Compiler(ChatConfig config)
 		{
 			Config = config;
@@ -19,8 +29,8 @@ namespace Botyara.Core
 		/// <summary>
 		/// Составляет расписание
 		/// </summary>
-		/// <param name="day">Номер дня недели, пн - 1, вс - 7</param>
-		/// <param name="week">1 - нечётная, 2 - чётная</param>
+		/// <param name="day">День недели</param>
+		/// <param name="week">Чётная или нечётная неделя</param>
 		public string Compile(Day day, Week week)
 		{
 			var timetables = new Dictionary<string, StudyTimetable>();
