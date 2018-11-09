@@ -1,0 +1,27 @@
+var class_botyara_1_1_core_1_1_data_dict =
+[
+    [ "DataDict", "class_botyara_1_1_core_1_1_data_dict.html#a69a0c32ce3489b169a170536bc7e79e4", null ],
+    [ "Add", "class_botyara_1_1_core_1_1_data_dict.html#a22232789c19e15a29c9e5c6eb27e424c", null ],
+    [ "Add", "class_botyara_1_1_core_1_1_data_dict.html#a967a1bef0ac7e87bba98facae1447e19", null ],
+    [ "Clear", "class_botyara_1_1_core_1_1_data_dict.html#a1db3694a9f5134a0bdd6f1ce4b70ba02", null ],
+    [ "Contains", "class_botyara_1_1_core_1_1_data_dict.html#af3257a1dbb6b13af94ba3ac20c588d97", null ],
+    [ "ContainsKey", "class_botyara_1_1_core_1_1_data_dict.html#a035ca4435fd20de5a5de48c1f10ab642", null ],
+    [ "CopyTo", "class_botyara_1_1_core_1_1_data_dict.html#aba843a676cb9489b3c56311585f74097", null ],
+    [ "GetEnumerator", "class_botyara_1_1_core_1_1_data_dict.html#a21b88ae9882b62d4954da76f187ee71c", null ],
+    [ "Remove", "class_botyara_1_1_core_1_1_data_dict.html#ac16e719c2c6b3afbd61a89f91f9d2126", null ],
+    [ "Remove", "class_botyara_1_1_core_1_1_data_dict.html#ae6f895ecbfb964055adcfb344a36cc82", null ],
+    [ "TryGetValue", "class_botyara_1_1_core_1_1_data_dict.html#afc10eb213adba3c7cc8bf6fcb3b22b22", null ],
+    [ "CurrentDay", "class_botyara_1_1_core_1_1_data_dict.html#a7d31b7a2dea7a853fe2613b837b2bea7", null ],
+    [ "CurrentLesson", "class_botyara_1_1_core_1_1_data_dict.html#a75b738d0a7b86e210becb6e4551be13e", null ],
+    [ "Config", "class_botyara_1_1_core_1_1_data_dict.html#abd19cfec16ceb5f9aa6e29bc29328ae0", null ],
+    [ "Count", "class_botyara_1_1_core_1_1_data_dict.html#af7be28fc2a4548555beb862d47b5ea61", null ],
+    [ "CurrentLessonNumber", "class_botyara_1_1_core_1_1_data_dict.html#a763f0035b42ef1db4c8f0a91b7ba31a8", null ],
+    [ "CurrentTarget", "class_botyara_1_1_core_1_1_data_dict.html#a18aa90e607abd062fd8ddca005205e9b", null ],
+    [ "Day", "class_botyara_1_1_core_1_1_data_dict.html#a731b75781bb181e07803cea9fdecaea4", null ],
+    [ "IsReadOnly", "class_botyara_1_1_core_1_1_data_dict.html#ac10af8c5ca8c3b00e1c76c8ffd2d9656", null ],
+    [ "Keys", "class_botyara_1_1_core_1_1_data_dict.html#ad8b0e0afc45c9e1e7531f33e74bfdd31", null ],
+    [ "this[string key]", "class_botyara_1_1_core_1_1_data_dict.html#aa03df2c37cc4c77fb169672d1056373a", null ],
+    [ "Timetables", "class_botyara_1_1_core_1_1_data_dict.html#a28fb2fcd5d47a4d73e10af07777d903f", null ],
+    [ "Values", "class_botyara_1_1_core_1_1_data_dict.html#a7e2baf0c6af918e899562a533aef0e6d", null ],
+    [ "Week", "class_botyara_1_1_core_1_1_data_dict.html#a51655ad06aee4d820830d701c36a3501", null ]
+];
