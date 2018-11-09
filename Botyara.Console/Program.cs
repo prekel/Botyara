@@ -12,21 +12,31 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using VkNet.Enums;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+//using Microsoft.Extensions.DependencyInjection;
+//using Microsoft.Extensions.Logging;
 using NLog;
-using System;
+//using System;
 using System.Text;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace Botyara.Console
 {
+	/// <summary>
+	/// Главный класс программы
+	/// </summary>
 	public class Program
 	{
 		private static Logger Log { get; } = LogManager.GetCurrentClassLogger();
 
+		/// <summary>
+		/// Конфигурация приложения
+		/// </summary>
 		public static Config Config { get; set; }
 
+		/// <summary>
+		/// Главная функция программы
+		/// </summary>
+		/// <param name="args">Аргументы командной строки</param>
 		public static void Main(string[] args)
 		{
 			LogManager.Configuration.Variables["starttime"] = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss-ffff");

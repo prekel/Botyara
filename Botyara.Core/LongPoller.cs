@@ -25,25 +25,44 @@ namespace Botyara.Core
 		}
 	}
 
+	/// <summary>
+	/// Обработчик Long Pool запросов
+	/// </summary>
 	public class LongPoller
 	{
 		private static Logger Log { get; } = LogManager.GetCurrentClassLogger();
 
+		/// <summary>
+		/// Vk Api
+		/// </summary>
 		public VkApi Api { get; private set; }
+		/// <summary>
+		/// Id группы
+		/// </summary>
 		public ulong GroupId { get; private set; }
 
 		private LongPollServerResponse LongPoolServer { get; set; }
 		private IDictionary<string, string> Params { get; set; }
 
+		/// <summary>
+		/// Событие, происходящее когда получено сообщение
+		/// </summary>
 		public event EventHandler ResponseReceived;
 
-
+		/// <summary>
+		/// Создаёт обработчика
+		/// </summary>
+		/// <param name="api">Vk Api</param>
+		/// <param name="gpoupid">Id группы</param>
 		public LongPoller(VkApi api, ulong gpoupid)
 		{
 			Api = api;
 			GroupId = gpoupid;
 		}
 
+		/// <summary>
+		/// Получает данные для запуска обработчик запросов
+		/// </summary>
 		public void Start()
 		{
 			Log.Debug("Получение LongPoolServer");
@@ -65,7 +84,10 @@ namespace Botyara.Core
 			var handler = ResponseReceived;
 			handler?.Invoke(this, e);
 		}
-
+		
+		/// <summary>
+		/// Запускает обработчик запросов
+		/// </summary>
 		public async void Run()
 		{
 			Log.Debug("Запущен LongPoolServer");

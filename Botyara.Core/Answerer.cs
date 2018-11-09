@@ -15,14 +15,32 @@ using Botyara.SfuApi;
 
 namespace Botyara.Core
 {
+	/// <summary>
+	/// Занимается обработкой входящих сообщений и ответами на них
+	/// </summary>
 	public class Answerer
 	{
 		private static Logger Log { get; } = LogManager.GetCurrentClassLogger();
 		
+		/// <summary>
+		/// Vk Api
+		/// </summary>
 		public VkApi Api { get; private set; }
+		/// <summary>
+		/// Обработчик запросов
+		/// </summary>
 		public LongPoller LongPoller { get; private set; }
+		/// <summary>
+		/// Конфигурация приложения
+		/// </summary>
 		public Config Config { get; private set; }
 
+		/// <summary>
+		/// Создаёт ответчика 
+		/// </summary>
+		/// <param name="api">Vk Api</param>
+		/// <param name="lp">LongPoller</param>
+		/// <param name="config">Конфигурация приложения</param>
 		public Answerer(VkApi api, LongPoller lp, Config config)
 		{
 			Api = api;

@@ -13,7 +13,7 @@ namespace Botyara.Core
 	public class Compiler
 	{
 		/// <summary>
-		/// Конфигурафия чата
+		/// Конфигурация чата
 		/// </summary>
 		public ChatConfig Config { get; private set; }
 
