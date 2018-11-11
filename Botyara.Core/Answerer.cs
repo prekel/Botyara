@@ -60,7 +60,7 @@ namespace Botyara.Core
 				var msgtext = msg.Text;
 				if (msgtext == "") return;
 				
-				var spl = msgtext.Split();
+				var spl = msgtext.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
 				var a = 0;
 				var b = 0;
 				if (spl.Length != 2) return;
