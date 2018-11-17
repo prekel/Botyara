@@ -7,7 +7,7 @@ using Botyara.Core;
 namespace Botyara.Core.Tests
 {
 	/// <summary>
-	/// Тесты для форматировщика
+	/// Тесты для форматировщика <see cref="Formatter"/>.
 	/// </summary>
     public class FormatterTests
     {

@@ -13,11 +13,25 @@ using VkNet.Utils;
 
 namespace Botyara.Core
 {
+	/// <summary>
+	/// Представляет аргументы события, вызываемым LongPoller.
+	/// </summary>
 	public class LongPollResponseEventArgs : EventArgs
 	{
+		/// <summary>
+		/// Получает недесериализованный ответ, полученным LongPoll-запросом.
+		/// </summary>
 		public VkResponse RawResponse { get; }
+
+		/// <summary>
+		/// Получает десериализованный ответ, полученным LongPoll-запросом.
+		/// </summary>
 		public Response.Response Response { get; }
 
+		/// <summary>
+		/// Инициализирует новый экземпляр класса <c>LongPollResponseEventArgs</c>.
+		/// </summary>
+		/// <param name="rawresp">Недесериализованный ответ, полученным LongPoll-запросом.</param>
 		public LongPollResponseEventArgs(VkResponse rawresp)
 		{
 			RawResponse = rawresp;
@@ -26,18 +40,19 @@ namespace Botyara.Core
 	}
 
 	/// <summary>
-	/// Обработчик Long Pool запросов
+	/// Представляет обработчика LongPool-запросов.
 	/// </summary>
 	public class LongPoller
 	{
 		private static Logger Log { get; } = LogManager.GetCurrentClassLogger();
 
 		/// <summary>
-		/// Vk Api
+		/// Получает Vk Api.
 		/// </summary>
 		public VkApi Api { get; private set; }
+
 		/// <summary>
-		/// Id группы
+		/// Получает идентификатор группы.
 		/// </summary>
 		public ulong GroupId { get; private set; }
 
@@ -45,15 +60,15 @@ namespace Botyara.Core
 		private IDictionary<string, string> Params { get; set; }
 
 		/// <summary>
-		/// Событие, происходящее когда получено сообщение
+		/// Событие, происходящее когда получено сообщение.
 		/// </summary>
-		public event EventHandler ResponseReceived;
+		public event EventHandler<LongPollResponseEventArgs> ResponseReceived;
 
 		/// <summary>
-		/// Создаёт обработчика
+		/// Инициализирует новый экземпляр класса <see cref="LongPoller"/>.
 		/// </summary>
-		/// <param name="api">Vk Api</param>
-		/// <param name="gpoupid">Id группы</param>
+		/// <param name="api">Vk Api.</param>
+		/// <param name="gpoupid">Идентификатор группы.</param>
 		public LongPoller(VkApi api, ulong gpoupid)
 		{
 			Api = api;
@@ -61,7 +76,7 @@ namespace Botyara.Core
 		}
 
 		/// <summary>
-		/// Получает данные для запуска обработчик запросов
+		/// Запрашивает данные для запуска обработчик запросов.
 		/// </summary>
 		public void Start()
 		{
@@ -79,14 +94,14 @@ namespace Botyara.Core
 			};
 		}
 
-		protected virtual void OnResponseReceived(EventArgs e)
+		protected virtual void OnResponseReceived(LongPollResponseEventArgs e)
 		{
 			var handler = ResponseReceived;
 			handler?.Invoke(this, e);
 		}
 		
 		/// <summary>
-		/// Запускает обработчик запросов
+		/// Запускает обработчик запросов.
 		/// </summary>
 		public async void Run()
 		{

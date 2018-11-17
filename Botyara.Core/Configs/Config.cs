@@ -4,25 +4,25 @@ using Newtonsoft.Json;
 namespace Botyara.Core.Configs
 {
 	/// <summary>
-	/// Конфигурация приложения
+	/// Представляет конфигурацию приложения.
 	/// </summary>
 	[JsonObject]
 	public class Config
 	{
 		/// <summary>
-		/// Access Token
+		/// Получает или задаёт Access Token.
 		/// </summary>
 		[JsonProperty]
 		public string AccessToken { get; set; }
-		
+
 		/// <summary>
-		/// Идентификатор группы
+		/// Получает или задаёт идентификатор группы.
 		/// </summary>
 		[JsonProperty]
 		public ulong GroupId { get; set; }
-		
+
 		/// <summary>
-		/// Конфигурации чатов
+		/// Получает или задаёт конфигурации чатов.
 		/// </summary>
 		[JsonProperty]
 		public IList<ChatConfig> ChatConfigs { get; set; }

@@ -4,18 +4,18 @@ using Newtonsoft.Json;
 namespace Botyara.Core.Response
 {
 	/// <summary>
-	/// Обновление от Long Poll
+	/// Представляет обновление, полученное LongPoll-запросом.
 	/// </summary>
 	[JsonObject]
 	public class Update
 	{
 		/// <summary>
-		/// Тип обновления
+		/// Получает тип обновления.
 		/// </summary>
 		[JsonProperty("type")] public string Type { get; private set; }
 
 		/// <summary>
-		/// Присланный объект
+		/// Получает присланный объект.
 		/// </summary>
 		[JsonProperty("object")] public Obj Object { get; private set; }
 	}

@@ -8,35 +8,36 @@ using VkNet.Exception;
 namespace Botyara.Core
 {
 	/// <summary>
-	/// Представляет составитель отформатированного расписания
+	/// Представляет составителя отформатированного расписания.
 	/// </summary>
 	public class Compiler
 	{
 		/// <summary>
-		/// Конфигурация чата
+		/// Задаёт конфигурацию чата.
 		/// </summary>
 		public ChatConfig Config { get; private set; }
 
 		/// <summary>
-		/// Создаёт составителя
+		/// Инициализирует новый экземпляр класса <see cref="Compiler"/> используя заданную конфигурацию чата.
 		/// </summary>
-		/// <param name="config">Конфигурация чата</param>
+		/// <param name="config">Конфигурация чата.</param>
 		public Compiler(ChatConfig config)
 		{
 			Config = config;
 		}
 
 		/// <summary>
-		/// Составляет расписание
+		/// Составляет расписание.
 		/// </summary>
-		/// <param name="day">День недели</param>
-		/// <param name="week">Чётная или нечётная неделя</param>
+		/// <param name="day">День недели.</param>
+		/// <param name="week">Чётная или нечётная неделя.</param>
+		/// <returns>Отформатированное расписание.</returns>
 		public string Compile(Day day, Week week)
 		{
 			var timetables = new Dictionary<string, StudyTimetable>();
 			foreach (var i in Config.Targets)
 			{
-				var tb = new TimetableBuilder(i);
+				var tb = new TimetableGetter(i);
 				timetables.Add(i, tb.Get());
 			}
 

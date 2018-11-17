@@ -1,36 +1,36 @@
 namespace Botyara.SfuApi
 {
 	/// <summary>
-	/// Перечисление, представляющее дни недели
+	/// Представляет дни недели.
 	/// </summary>
 	public enum Day
 	{
 		/// <summary>
-		/// Понедельник
+		/// Понедельник.
 		/// </summary>
 		Monday = 1,
 		/// <summary>
-		/// Вторник
+		/// Вторник.
 		/// </summary>
 		Tuesday = 2,
 		/// <summary>
-		/// Среда
+		/// Среда.
 		/// </summary>
 		Wednesday = 3,
 		/// <summary>
-		/// Четверг
+		/// Четверг.
 		/// </summary>
 		Thursday = 4,
 		/// <summary>
-		/// Пятница
+		/// Пятница.
 		/// </summary>
 		Friday = 5,
 		/// <summary>
-		/// Суббота
+		/// Суббота.
 		/// </summary>
 		Saturday = 6,
 		/// <summary>
-		/// Воскресенье
+		/// Воскресенье.
 		/// </summary>
 		Sunday = 7
 	}

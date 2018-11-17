@@ -5,70 +5,87 @@ using Newtonsoft.Json.Linq;
 namespace Botyara.Core.Response
 {
 	/// <summary>
-	/// Объект от Long Poll
+	/// Представляет объект, полученный LongPoll-запросом.
 	/// </summary>
 	[JsonObject]
 	public class Obj
 	{
 		/// <summary>
-		/// Время отправки в Unixtime
+		/// Получает время отправки в Unixtime.
 		/// </summary>
-		[JsonProperty("date")] public long Date { get; private set; }
+		[JsonProperty("date")]
+		public long Date { get; private set; }
 
 		/// <summary>
-		/// Идентификатор автора сообщения
+		/// Получает идентификатор автора сообщения.
 		/// </summary>
-		[JsonProperty("from_id")] public long FromId { get; private set; }
+		[JsonProperty("from_id")]
+		public long FromId { get; private set; }
 
 		/// <summary>
-		/// Идентификатор сообщения
+		/// Получает идентификатор сообщения.
 		/// </summary>
-		[JsonProperty("id")] public long Id { get; private set; }
+		[JsonProperty("id")]
+		public long Id { get; private set; }
 
 		/// <summary>
-		/// тип сообщения (0 — полученное, 1 — отправленное, не возвращается для пересланных сообщений)
+		/// Получает тип сообщения.
 		/// </summary>
-		[JsonProperty("out")] public long Out { get; private set; }
+		/// <remarks>
+		/// (0 — полученное, 1 — отправленное, не возвращается для пересланных сообщений).
+		/// </remarks>
+		[JsonProperty("out")]
+		public long Out { get; private set; }
 
 		/// <summary>
-		/// Идентификатор назначения (чат, из которого пришло сообщение (Id беседы или собеседника)
+		/// Получает идентификатор назначения (чат, из которого пришло сообщение (Id беседы или собеседника).
 		/// </summary>
-		[JsonProperty("peer_id")] public long PeerId { get; private set; }
+		[JsonProperty("peer_id")]
+		public long PeerId { get; private set; }
 
 		/// <summary>
-		/// Текст сообщения
+		/// Получает текст сообщения.
 		/// </summary>
-		[JsonProperty("text")] public string Text { get; private set; }
+		[JsonProperty("text")]
+		public string Text { get; private set; }
 
 		/// <summary>
-		/// 
+		/// Получает <c>conversation_message_id</c>.
 		/// </summary>
 		[JsonProperty("conversation_message_id")]
 		public int ConversationMessageId { get; private set; }
 
 		/// <summary>
-		/// Массив пересланных сообщений 
+		/// Получает массив пересланных сообщений.
 		/// </summary>
-		[JsonProperty("fwd_messages")] public IList<JObject> FwdMessages { get; private set; }
+		[JsonProperty("fwd_messages")]
+		public IList<JObject> FwdMessages { get; private set; }
 
 		/// <summary>
-		/// Является ли сообщение важным
+		/// Получает значение того, является ли сообщение важным.
 		/// </summary>
-		[JsonProperty("important")] public bool Important { get; private set; }
+		[JsonProperty("important")]
+		public bool Important { get; private set; }
 
 		/// <summary>
-		/// Идентификатор, используемый при отправке сообщения, возвращается только для исходящих сообщений
+		/// Получает идентификатор, используемый при отправке сообщения.
 		/// </summary>
-		[JsonProperty("random_id")] public long RandomId { get; private set; }
+		/// <remarks>
+		/// Возвращается только для исходящих сообщений.
+		/// </remarks>
+		[JsonProperty("random_id")]
+		public long RandomId { get; private set; }
 
 		/// <summary>
-		/// Вложения
+		/// Получает вложения.
 		/// </summary>
-		[JsonProperty("attachments")] public IList<JObject> Attachments { get; private set; }
+		[JsonProperty("attachments")]
+		public IList<JObject> Attachments { get; private set; }
 
 		/// <summary>
-		/// Является ли сообщение скрытым
+		/// Получает значение того, является ли сообщение скрытым.
 		/// </summary>
-		[JsonProperty("is_hidden")] public bool IsHidden { get; private set; }
+		[JsonProperty("is_hidden")]
+		public bool IsHidden { get; private set; }
 	}
 }

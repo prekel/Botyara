@@ -8,7 +8,7 @@ using Botyara.SfuApi;
 namespace Botyara.Core.Tests
 {
 	/// <summary>
-	/// Тесты для проверки составителя расписания
+	/// Тесты для проверки составителя расписания <see cref="Compiler"/>.
 	/// </summary>
 	[TestFixture]
 	public class CompilerTests
@@ -20,7 +20,7 @@ namespace Botyara.Core.Tests
 		private Compiler Compiler2 { get; set; }
 
 		/// <summary>
-		/// Составление конфигурация чатов
+		/// Составление конфигурация чатов.
 		/// </summary>
 		[SetUp]
 		public void Setup()
@@ -49,7 +49,7 @@ namespace Botyara.Core.Tests
 		}
 
 		/// <summary>
-		/// Проверка правильности составленного расписания на чётный понедельник
+		/// Проверка правильности составленного расписания на чётный понедельник.
 		/// </summary>
 		[Test]
 		public void Test1_12()
@@ -64,7 +64,7 @@ namespace Botyara.Core.Tests
 		}
 
 		/// <summary>
-		/// Проверка правильности составленного расписания на чётную среду, когда нет занятий
+		/// Проверка правильности составленного расписания на чётную среду, когда нет занятий.
 		/// </summary>
 		[Test]
 		public void Test1_32()
@@ -78,7 +78,7 @@ namespace Botyara.Core.Tests
 		}
 
 		/// <summary>
-		/// Проверка правильности составленного расписания на чётный понедельник для двух групп
+		/// Проверка правильности составленного расписания на чётный понедельник для двух групп.
 		/// </summary>
 		[Test]
 		public void Test2_12()

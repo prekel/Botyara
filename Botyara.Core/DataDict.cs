@@ -8,56 +8,61 @@ using Botyara.SfuApi;
 namespace Botyara.Core
 {
 	/// <summary>
-	/// Представляет из себя словарь значений (название дня, название предмета и т. д.) для составление строки расписания
+	/// Представляет словарь значений (название дня, название предмета и т. д.) для составление отформатированного расписания.
 	/// </summary>
 	public class DataDict : IDictionary<string, object>
 	{
 		/// <summary>
-		/// Конфигурация чата
+		/// Получает конфигурация чата.
 		/// </summary>
 		public ChatConfig Config { get; private set; }
+
 		/// <summary>
-		/// Расписания групп
+		/// Получает расписания групп.
 		/// </summary>
 		public IDictionary<string, StudyTimetable> Timetables { get; private set; }
+
 		/// <summary>
-		/// День недели
+		/// Получает день недели.
 		/// </summary>
 		public Day Day { get; private set; }
+
 		/// <summary>
-		/// Чётная или нечётная неделя
+		/// Получает чётная или нечётную неделю.
 		/// </summary>
 		public Week Week { get; private set; }
 
 		/// <summary>
-		/// Текущая цель
+		/// Получает или задаёт текущую цель (номер группы или имя преподавателя).
 		/// </summary>
 		public string CurrentTarget { get; set; }
+
 		/// <summary>
-		/// Текущий номер пары
+		/// Получает или задаёт номер текущей пары.
 		/// </summary>
 		public int CurrentLessonNumber { get; set; }
 
 		/// <summary>
-		/// Текущий учебный день
+		/// Получает текущий учебный день.
 		/// </summary>
 		public IList<StudyLesson> CurrentDay =>
 			(from value in Timetables[CurrentTarget].Timetable
-				where value.Day == Day && value.Week == Week
-				select value).ToList();
+			 where value.Day == Day && value.Week == Week
+			 select value).ToList();
 
 		/// <summary>
-		/// Текущая пара
+		/// Получает текущую пару.
 		/// </summary>
 		public StudyLesson CurrentLesson => CurrentDay[CurrentLessonNumber - 1];
 
 		/// <summary>
-		/// Создаёт словарь
+		/// Инициализирует новый экземпляр класса <see cref="DataDict"/>.
 		/// </summary>
-		/// <param name="config">Конфигурация чата</param>
-		/// <param name="timetables">Расписания</param>
-		/// <param name="day">День недели</param>
-		/// <param name="week">Чётная или нечётная неделя</param>
+		/// <param name="config">Конфигурация чата.</param>
+		/// <param name="timetables">Расписания.</param>
+		/// <param name="day">День недели.</param>
+		/// <param name="week">Чётная или нечётная неделя.</param>
+		// ReSharper disable once NotNullMemberIsNotInitialized
 		public DataDict(ChatConfig config, IDictionary<string, StudyTimetable> timetables, Day day, Week week)
 		{
 			Config = config;
@@ -68,6 +73,11 @@ namespace Botyara.Core
 
 		//[Obsolete]
 		//public int Count { get; }
+
+		/// <inheritdoc />
+		/// <summary>
+		/// Уведомляет о том, что изменять значения по ключу нельзя.
+		/// </summary>
 		public bool IsReadOnly { get; } = true;
 
 		private string c_OddEvenDayVinPod()
@@ -76,11 +86,11 @@ namespace Botyara.Core
 		}
 
 		/// <summary>
-		/// Возвращает название дня недели вместе с чётной/нечётной неделей и винительном падеже
+		/// Возвращает название дня недели вместе с чётной/нечётной неделей и винительном падеже.
 		/// </summary>
-		/// <param name="day">День недели</param>
-		/// <param name="week">Чётная/нечётная неделя</param>
-		/// <returns>Название дня недели вместе с чётной/нечётной неделей и винительном падеже</returns>
+		/// <param name="day">День недели.</param>
+		/// <param name="week">Чётная/нечётная неделя.</param>
+		/// <returns>Название дня недели вместе с чётной/нечётной неделей и винительном падеже.</returns>
 		public static string DayNameVinPod(Day day, Week week)
 		{
 			switch (week)
@@ -179,20 +189,22 @@ namespace Botyara.Core
 		}
 
 		/// <summary>
-		/// Возвращает значение по заданному ключу:
-		/// OddEvenDayVinPod - Название дня недели вместе с чётной/нечётной неделей и винительном падеже
-		/// Target - Название цели (номер группы или преподаватель)
-		/// TargetsList - Цели через запятую
-		/// NumberInTimetable - Номер пары в расписании пар 
-		/// NumberInOrder - Номер пары по порядку
-		/// Time - Время пары
-		/// Subject - Предмет
-		/// Type - Тип (лекция, практика и т. д.)
-		/// Teacher - Преподаватель
-		/// Place - Аудитория
+		/// Возвращает значение по заданному ключу.
 		/// </summary>
-		/// <param name="key">Описание ключей в описании функции</param>
-		/// <returns>Строка или число</returns>
+		/// <remarks>
+		/// <para><c>OddEvenDayVinPod</c> - Название дня недели вместе с чётной/нечётной неделей и винительном падеже</para>
+		/// <para><c>Target</c> - Название цели (номер группы или преподаватель)</para>
+		/// <para><c>TargetsList</c> - Цели через запятую</para>
+		/// <para><c>NumberInTimetable</c> - Номер пары в расписании пар</para>
+		/// <para><c>NumberInOrder</c> - Номер пары по порядку</para>
+		/// <para><c>Time</c> - Время пары</para>
+		/// <para><c>Subject</c> - Предмет</para>
+		/// <para><c>Type</c> - Тип (лекция, практика и т. д.)</para>
+		/// <para><c>Teacher</c> - Преподаватель</para>
+		/// <para><c>Place</c> - Аудитория</para>
+		/// </remarks>
+		/// <param name="key">Описание ключей в описании функции.</param>
+		/// <returns>Строка или число, представляющее запрашиваемое значение.</returns>
 		public object this[string key]
 		{
 			get
@@ -223,7 +235,7 @@ namespace Botyara.Core
 						throw new NotImplementedException();
 				}
 			}
-			set => throw new NotImplementedException();
+			set => throw new NotSupportedException();
 		}
 
 		#region NotUsed
