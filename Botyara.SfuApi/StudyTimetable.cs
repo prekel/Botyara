@@ -4,22 +4,31 @@ using Newtonsoft.Json;
 namespace Botyara.SfuApi
 {
 	/// <summary>
-	/// Представляет расписание одной цели
+	/// Представляет расписание одной цели.
 	/// </summary>
 	[JsonObject]
 	public class StudyTimetable
 	{
 		/// <summary>
-		/// Список пар
+		/// Получает список пар.
 		/// </summary>
-		[JsonProperty("timetable")] public List<StudyLesson> Timetable { get; private set; }
+		[JsonProperty("timetable")]
+		public List<StudyLesson> Timetable { get; private set; }
+
 		/// <summary>
-		/// Цель (номер группы или преподаватель)
+		/// Получает цель (номер группы или имя преподавателя).
 		/// </summary>
-		[JsonProperty("target")] public string Target { get; private set; }
+		[JsonProperty("target")]
+		public string Target { get; private set; }
+
 		/// <summary>
-		/// Тип - group или teacher
+		/// Получает тип.
 		/// </summary>
-		[JsonProperty("type")] public string Type { get; private set; }
+		/// <remarks>
+		/// <c>group</c> или <c>teacher</c>.
+		/// </remarks>
+		[JsonProperty("type")]
+		public string Type { get; private set; }
+
 	}
 }

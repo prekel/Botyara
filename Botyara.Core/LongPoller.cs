@@ -13,11 +13,25 @@ using VkNet.Utils;
 
 namespace Botyara.Core
 {
+	/// <summary>
+	/// Представляет аргументы события, вызываемым LongPoller.
+	/// </summary>
 	public class LongPollResponseEventArgs : EventArgs
 	{
+		/// <summary>
+		/// Получает недесериализованный ответ, полученным LongPoll-запросом.
+		/// </summary>
 		public VkResponse RawResponse { get; }
+
+		/// <summary>
+		/// Получает десериализованный ответ, полученным LongPoll-запросом.
+		/// </summary>
 		public Response.Response Response { get; }
 
+		/// <summary>
+		/// Инициализирует новый экземпляр класса <c>LongPollResponseEventArgs</c>.
+		/// </summary>
+		/// <param name="rawresp">Недесериализованный ответ, полученным LongPoll-запросом.</param>
 		public LongPollResponseEventArgs(VkResponse rawresp)
 		{
 			RawResponse = rawresp;
@@ -25,25 +39,45 @@ namespace Botyara.Core
 		}
 	}
 
+	/// <summary>
+	/// Представляет обработчика LongPool-запросов.
+	/// </summary>
 	public class LongPoller
 	{
 		private static Logger Log { get; } = LogManager.GetCurrentClassLogger();
 
+		/// <summary>
+		/// Получает Vk Api.
+		/// </summary>
 		public VkApi Api { get; private set; }
+
+		/// <summary>
+		/// Получает идентификатор группы.
+		/// </summary>
 		public ulong GroupId { get; private set; }
 
 		private LongPollServerResponse LongPoolServer { get; set; }
 		private IDictionary<string, string> Params { get; set; }
 
-		public event EventHandler ResponseReceived;
+		/// <summary>
+		/// Событие, происходящее когда получено сообщение.
+		/// </summary>
+		public event EventHandler<LongPollResponseEventArgs> ResponseReceived;
 
-
+		/// <summary>
+		/// Инициализирует новый экземпляр класса <see cref="LongPoller"/>.
+		/// </summary>
+		/// <param name="api">Vk Api.</param>
+		/// <param name="gpoupid">Идентификатор группы.</param>
 		public LongPoller(VkApi api, ulong gpoupid)
 		{
 			Api = api;
 			GroupId = gpoupid;
 		}
 
+		/// <summary>
+		/// Запрашивает данные для запуска обработчик запросов.
+		/// </summary>
 		public void Start()
 		{
 			Log.Debug("Получение LongPoolServer");
@@ -60,12 +94,15 @@ namespace Botyara.Core
 			};
 		}
 
-		protected virtual void OnResponseReceived(EventArgs e)
+		protected virtual void OnResponseReceived(LongPollResponseEventArgs e)
 		{
 			var handler = ResponseReceived;
 			handler?.Invoke(this, e);
 		}
-
+		
+		/// <summary>
+		/// Запускает обработчик запросов.
+		/// </summary>
 		public async void Run()
 		{
 			Log.Debug("Запущен LongPoolServer");

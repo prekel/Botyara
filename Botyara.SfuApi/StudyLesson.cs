@@ -4,42 +4,63 @@ using Newtonsoft.Json;
 namespace Botyara.SfuApi
 {
 	/// <summary>
-	/// Представляет описание одной пары
+	/// Представляет описание одной пары.
 	/// </summary>
 	[JsonObject]
 	public class StudyLesson
 	{
 		/// <summary>
-		/// День недели
+		/// Получает день недели.
 		/// </summary>
-		[JsonProperty("day")] public Day Day { get; private set; }
+		[JsonProperty("day")]
+		public Day Day { get; private set; }
+
 		/// <summary>
-		/// Чётная или нечётная неделя
+		/// Получает чётную или нечётную неделя.
 		/// </summary>
-		[JsonProperty("week")] public Week Week { get; private set; }
+		[JsonProperty("week")]
+		public Week Week { get; private set; }
+
 		/// <summary>
-		/// Время
+		/// Получает время.
 		/// </summary>
-		[JsonProperty("time")] public string Time { get; private set; }
+		[JsonProperty("time")]
+		public string Time { get; private set; }
+
 		/// <summary>
-		/// Предмет
+		/// Получает предмет.
 		/// </summary>
-		[JsonProperty("subject")] public string Subject { get; private set; }
+		[JsonProperty("subject")]
+		public string Subject { get; private set; }
+
 		/// <summary>
-		/// Тип (лекция, практика и т.д.)
+		/// Получает тип (лекция, практика и т.д.).
 		/// </summary>
-		[JsonProperty("type")] public string Type { get; private set; }
+		[JsonProperty("type")]
+		public string Type { get; private set; }
+
 		/// <summary>
-		/// Аудитория
+		/// Получает аудиторию.
 		/// </summary>
-		[JsonProperty("place")] public string Place { get; private set; }
+		[JsonProperty("place")]
+		public string Place { get; private set; }
+
 		/// <summary>
-		/// Преподаватель
+		/// Получает преподавателя.
 		/// </summary>
-		[JsonProperty("teacher")] public string Teacher { get; private set; }
+		/// <remarks>
+		///	Если цель - группа.
+		/// </remarks>
+		[JsonProperty("teacher")]
+		public string Teacher { get; private set; }
+
 		/// <summary>
-		/// Группы
+		/// Получает группы.
 		/// </summary>
-		[JsonProperty("groups")] public List<string> Groups { get; private set; }
+		/// <remarks>
+		/// Если цель - преподаватель.
+		/// </remarks>
+		[JsonProperty("groups")]
+		public List<string> Groups { get; private set; }
 	}
 }

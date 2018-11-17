@@ -7,23 +7,62 @@ using Botyara.SfuApi;
 
 namespace Botyara.Core
 {
+	/// <summary>
+	/// Представляет словарь значений (название дня, название предмета и т. д.) для составление отформатированного расписания.
+	/// </summary>
 	public class DataDict : IDictionary<string, object>
 	{
+		/// <summary>
+		/// Получает конфигурация чата.
+		/// </summary>
 		public ChatConfig Config { get; private set; }
+
+		/// <summary>
+		/// Получает расписания групп.
+		/// </summary>
 		public IDictionary<string, StudyTimetable> Timetables { get; private set; }
+
+		/// <summary>
+		/// Получает день недели.
+		/// </summary>
 		public Day Day { get; private set; }
+
+		/// <summary>
+		/// Получает чётная или нечётную неделю.
+		/// </summary>
 		public Week Week { get; private set; }
 
+		/// <summary>
+		/// Получает или задаёт текущую цель (номер группы или имя преподавателя).
+		/// </summary>
 		public string CurrentTarget { get; set; }
+
+		/// <summary>
+		/// Получает или задаёт номер текущей пары.
+		/// </summary>
 		public int CurrentLessonNumber { get; set; }
 
+		/// <summary>
+		/// Получает текущий учебный день.
+		/// </summary>
 		public IList<StudyLesson> CurrentDay =>
 			(from value in Timetables[CurrentTarget].Timetable
-				where value.Day == Day && value.Week == Week
-				select value).ToList();
+			 where value.Day == Day && value.Week == Week
+			 select value).ToList();
 
+		/// <summary>
+		/// Получает текущую пару.
+		/// </summary>
 		public StudyLesson CurrentLesson => CurrentDay[CurrentLessonNumber - 1];
 
+		/// <summary>
+		/// Инициализирует новый экземпляр класса <see cref="DataDict"/>.
+		/// </summary>
+		/// <param name="config">Конфигурация чата.</param>
+		/// <param name="timetables">Расписания.</param>
+		/// <param name="day">День недели.</param>
+		/// <param name="week">Чётная или нечётная неделя.</param>
+		// ReSharper disable once NotNullMemberIsNotInitialized
 		public DataDict(ChatConfig config, IDictionary<string, StudyTimetable> timetables, Day day, Week week)
 		{
 			Config = config;
@@ -32,7 +71,13 @@ namespace Botyara.Core
 			Week = week;
 		}
 
-		public int Count { get; }
+		//[Obsolete]
+		//public int Count { get; }
+
+		/// <inheritdoc />
+		/// <summary>
+		/// Уведомляет о том, что изменять значения по ключу нельзя.
+		/// </summary>
 		public bool IsReadOnly { get; } = true;
 
 		private string c_OddEvenDayVinPod()
@@ -40,6 +85,12 @@ namespace Botyara.Core
 			return DayNameVinPod(Day, Week);
 		}
 
+		/// <summary>
+		/// Возвращает название дня недели вместе с чётной/нечётной неделей и винительном падеже.
+		/// </summary>
+		/// <param name="day">День недели.</param>
+		/// <param name="week">Чётная/нечётная неделя.</param>
+		/// <returns>Название дня недели вместе с чётной/нечётной неделей и винительном падеже.</returns>
 		public static string DayNameVinPod(Day day, Week week)
 		{
 			switch (week)
@@ -137,6 +188,23 @@ namespace Botyara.Core
 			return CurrentLesson.Place;
 		}
 
+		/// <summary>
+		/// Возвращает значение по заданному ключу.
+		/// </summary>
+		/// <remarks>
+		/// <para><c>OddEvenDayVinPod</c> - Название дня недели вместе с чётной/нечётной неделей и винительном падеже</para>
+		/// <para><c>Target</c> - Название цели (номер группы или преподаватель)</para>
+		/// <para><c>TargetsList</c> - Цели через запятую</para>
+		/// <para><c>NumberInTimetable</c> - Номер пары в расписании пар</para>
+		/// <para><c>NumberInOrder</c> - Номер пары по порядку</para>
+		/// <para><c>Time</c> - Время пары</para>
+		/// <para><c>Subject</c> - Предмет</para>
+		/// <para><c>Type</c> - Тип (лекция, практика и т. д.)</para>
+		/// <para><c>Teacher</c> - Преподаватель</para>
+		/// <para><c>Place</c> - Аудитория</para>
+		/// </remarks>
+		/// <param name="key">Описание ключей в описании функции.</param>
+		/// <returns>Строка или число, представляющее запрашиваемое значение.</returns>
 		public object this[string key]
 		{
 			get
@@ -167,7 +235,7 @@ namespace Botyara.Core
 						throw new NotImplementedException();
 				}
 			}
-			set => throw new NotImplementedException();
+			set => throw new NotSupportedException();
 		}
 
 		#region NotUsed
@@ -213,6 +281,9 @@ namespace Botyara.Core
 		{
 			throw new NotImplementedException();
 		}
+
+		[Obsolete]
+		public int Count { get; }
 
 		[Obsolete]
 		public void Add(string key, object value)
