@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -6,14 +6,16 @@ using Botyara.Core;
 
 namespace Botyara.Core.Tests
 {
+	/// <summary>
+	/// Тесты для форматировщика <see cref="Formatter"/>.
+	/// </summary>
     public class FormatterTests
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
-
-        [Test]
+		/// <summary>
+		/// Тест форматировщика
+		/// Из строки "abc: {abc}, xyz: {xyz}" должна получиться "abc: {abc1}, xyz: {1}"
+		/// </summary>
+		[Test]
         public void Test1()
         {
 	        var dict = new Dictionary<string, object>
