@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['obj',['Obj',['../class_botyara_1_1_core_1_1_response_1_1_obj.html',1,'Botyara::Core::Response']]],
-  ['odd',['Odd',['../namespace_botyara_1_1_sfu_api.html#a44d361ceb411c7975b4801f87fe814a8a37b6bd7fe61d651735cec3d3b0356c66',1,'Botyara::SfuApi']]]
+  ['main',['Main',['../class_botyara_1_1_console_1_1_program.html#a192cd2368e89d770f756ddcca293a0b6',1,'Botyara::Console::Program']]],
+  ['monday',['Monday',['../namespace_botyara_1_1_sfu_api.html#aa4adc605482d6967f7a82438f02d849ba6f8522e0610541f1ef215a22ffa66ff6',1,'Botyara::SfuApi']]]
 ];

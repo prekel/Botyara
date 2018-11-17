@@ -1,12 +1,14 @@
 var indexSectionsWithContent =
 {
-  0: "abcdefglmoprstuw",
+  0: "abcdefgilmnoprstuw",
   1: "acdfloprstu",
   2: "b",
-  3: "bcgt",
-  4: "dw",
-  5: "efmostw",
-  6: "dfglpstw"
+  3: "acdfglmrst",
+  4: "c",
+  5: "dw",
+  6: "efmostw",
+  7: "acdfgilnoprstuw",
+  8: "r"
 };
 
 var indexSectionNames =
@@ -15,9 +17,11 @@ var indexSectionNames =
   1: "classes",
   2: "namespaces",
   3: "functions",
-  4: "enums",
-  5: "enumvalues",
-  6: "properties"
+  4: "variables",
+  5: "enums",
+  6: "enumvalues",
+  7: "properties",
+  8: "events"
 };
 
 var indexSectionLabels =
@@ -26,8 +30,10 @@ var indexSectionLabels =
   1: "Классы",
   2: "Пространства имен",
   3: "Функции",
-  4: "Перечисления",
-  5: "Элементы перечислений",
-  6: "Свойства"
+  4: "Переменные",
+  5: "Перечисления",
+  6: "Элементы перечислений",
+  7: "Свойства",
+  8: "События"
 };
 

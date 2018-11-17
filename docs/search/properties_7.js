@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['week',['Week',['../class_botyara_1_1_sfu_api_1_1_study_lesson.html#a74dfcf2c29382263d63534bc6c57ffd8',1,'Botyara::SfuApi::StudyLesson']]]
+  ['nolessons',['NoLessons',['../class_botyara_1_1_core_1_1_configs_1_1_chat_config.html#abdcdae8662a4d203c7249a68571422fc',1,'Botyara::Core::Configs::ChatConfig']]]
 ];

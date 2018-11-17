@@ -9,7 +9,5 @@ var namespace_botyara_1_1_core =
     [ "DataDict", "class_botyara_1_1_core_1_1_data_dict.html", "class_botyara_1_1_core_1_1_data_dict" ],
     [ "Formatter", "class_botyara_1_1_core_1_1_formatter.html", "class_botyara_1_1_core_1_1_formatter" ],
     [ "LongPoller", "class_botyara_1_1_core_1_1_long_poller.html", "class_botyara_1_1_core_1_1_long_poller" ],
-    [ "LongPollResponseEventArgs", "class_botyara_1_1_core_1_1_long_poll_response_event_args.html", "class_botyara_1_1_core_1_1_long_poll_response_event_args" ],
-    [ "Schedule", "class_botyara_1_1_core_1_1_schedule.html", "class_botyara_1_1_core_1_1_schedule" ],
-    [ "Test", "class_botyara_1_1_core_1_1_test.html", "class_botyara_1_1_core_1_1_test" ]
+    [ "LongPollResponseEventArgs", "class_botyara_1_1_core_1_1_long_poll_response_event_args.html", "class_botyara_1_1_core_1_1_long_poll_response_event_args" ]
 ];
