@@ -24,6 +24,7 @@ for the JavaScript code in this file
 var NAVTREE =
 [
   [ "Botyara", "index.html", [
+    [ "Главная страница", "index.html", null ],
     [ "Пакеты", "namespaces.html", [
       [ "Пакеты", "namespaces.html", "namespaces_dup" ],
       [ "Функции с областью видимости пакета", "namespacemembers.html", [
@@ -38,7 +39,6 @@ var NAVTREE =
       [ "Члены классов", "functions.html", [
         [ "Указатель", "functions.html", null ],
         [ "Функции", "functions_func.html", null ],
-        [ "Переменные", "functions_vars.html", null ],
         [ "Свойства", "functions_prop.html", null ],
         [ "События", "functions_evnt.html", null ]
       ] ]

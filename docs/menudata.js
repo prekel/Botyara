@@ -51,7 +51,6 @@ var menudata={children:[
 {text:"u",url:"functions.html#index_u"},
 {text:"w",url:"functions.html#index_w"}]},
 {text:"Функции",url:"functions_func.html"},
-{text:"Переменные",url:"functions_vars.html"},
 {text:"Свойства",url:"functions_prop.html",children:[
 {text:"a",url:"functions_prop.html#index_a"},
 {text:"c",url:"functions_prop.html#index_c"},
