@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Net;
+
 using Newtonsoft.Json;
 
 namespace Botyara.SfuApi
 {
 	/// <summary>
-	/// Представляет получателя расписания, используя Api СФУ.
+	/// Представляет получателя расписания, использующего API СФУ.
 	/// </summary>
 	public class TimetableGetter
 	{
