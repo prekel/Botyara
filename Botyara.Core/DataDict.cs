@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+
 using Botyara.Core.Configs;
 using Botyara.SfuApi;
 
@@ -45,15 +46,23 @@ namespace Botyara.Core
 		/// <summary>
 		/// Получает текущий учебный день.
 		/// </summary>
-		public IList<StudyLesson> CurrentDay =>
-			(from value in Timetables[CurrentTarget].Timetable
-			 where value.Day == Day && value.Week == Week
-			 select value).ToList();
+		public IList<StudyLesson> CurrentDay
+		{
+			get
+			{
+				return (from value in Timetables[CurrentTarget].Timetable
+					where value.Day == Day && value.Week == Week
+					select value).ToList();
+			}
+		}
 
 		/// <summary>
 		/// Получает текущую пару.
 		/// </summary>
-		public StudyLesson CurrentLesson => CurrentDay[CurrentLessonNumber - 1];
+		public StudyLesson CurrentLesson
+		{
+			get { return CurrentDay[CurrentLessonNumber - 1]; }
+		}
 
 		/// <summary>
 		/// Инициализирует новый экземпляр класса <see cref="DataDict"/>.

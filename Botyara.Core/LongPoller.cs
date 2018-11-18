@@ -3,11 +3,10 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using VkNet;
-using VkNet.Enums.SafetyEnums;
-using VkNet.Model.RequestParams;
+
 using Newtonsoft.Json;
 using NLog;
+using VkNet;
 using VkNet.Model;
 using VkNet.Utils;
 

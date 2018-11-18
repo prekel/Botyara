@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+
 using Botyara.Core.Configs;
 using Botyara.SfuApi;
-using VkNet.Exception;
 
 namespace Botyara.Core
 {

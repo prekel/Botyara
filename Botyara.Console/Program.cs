@@ -1,23 +1,18 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using Botyara.Console;
 using System.Linq;
 using System.Threading;
+using System.Text;
 using static System.Console;
+
+using Newtonsoft.Json;
+using VkNet.Enums;
+using NLog;
+
 using Botyara.SfuApi;
 using Botyara.Core;
 using Botyara.Core.Configs;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using VkNet.Enums;
-//using Microsoft.Extensions.DependencyInjection;
-//using Microsoft.Extensions.Logging;
-using NLog;
-//using System;
-using System.Text;
-using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace Botyara.Console
 {

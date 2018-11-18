@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+
 using Newtonsoft.Json;
 
 namespace Botyara.SfuApi
@@ -29,6 +30,5 @@ namespace Botyara.SfuApi
 		/// </remarks>
 		[JsonProperty("type")]
 		public string Type { get; private set; }
-
 	}
 }

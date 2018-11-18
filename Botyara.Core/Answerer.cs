@@ -4,13 +4,12 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
-using Botyara.Core.Configs;
+
 using VkNet;
-using VkNet.Enums.SafetyEnums;
 using VkNet.Model.RequestParams;
-using Newtonsoft.Json;
-using Microsoft.Extensions.Logging;
 using NLog;
+
+using Botyara.Core.Configs;
 using Botyara.SfuApi;
 
 namespace Botyara.Core
@@ -52,6 +51,11 @@ namespace Botyara.Core
 			Log.Debug("Создан Answerer");
 		}
 
+		/// <summary>
+		/// Обработка входящего сообщения.
+		/// </summary>
+		/// <param name="sender">Объект, в котором вызвано событие.</param>
+		/// <param name="e">Аргументы события.</param>
 		private void LpOnResponseReceived(object sender, LongPollResponseEventArgs e)
 		{
 			var lpe = e;
