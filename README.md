@@ -1,7 +1,5 @@
 # Botyara
 
-|Branch|Build|
-|:----:|:---:|
-| `latest` | [![Build status](https://ci.appveyor.com/api/projects/status/pa9vi7ditdji99pg?svg=true)](https://ci.appveyor.com/project/prekel/botyara) |
-| `master` | [![Build status](https://ci.appveyor.com/api/projects/status/pa9vi7ditdji99pg/branch/master?svg=true)](https://ci.appveyor.com/project/prekel/botyara/branch/master) |
-| `develop` | [![Build status](https://ci.appveyor.com/api/projects/status/pa9vi7ditdji99pg/branch/develop?svg=true)](https://ci.appveyor.com/project/prekel/botyara/branch/develop) |
+Бот для социальной сети "ВКонтакте" ("Botyara" — рабочее название), который по запросу выводит расписание для заданных целей в заданном формате. Цели и формат заданы в конфигурационном файле.
+
+![Пример запроса и ответа](https://pp.userapi.com/c845420/v845420396/132c82/wLb4upGK8NI.jpg)
