@@ -54,6 +54,7 @@ namespace Botyara.Console
 				Log.Info("Создаётся конфигурция");
 				var token = "access_token";
 				var groupid = 1234ul;
+				var peerid = 0;
 				var target = "КИ18-17/1б";
 
 				bool Dialog()
@@ -65,6 +66,8 @@ namespace Botyara.Console
 					token = ReadLine();
 					Write("GroupId: ");
 					groupid = UInt64.Parse(ReadLine());
+					Write("PeerId: ");
+					peerid = Int32.Parse(ReadLine());
 					Write("Target: ");
 					target = ReadLine();
 					return true;
@@ -79,7 +82,7 @@ namespace Botyara.Console
 					SecondString = "Группа {TargetsList}:",
 					LessonString = "{NumberInTimetable}) {Time} {Subject} ({Type}) {Teacher} {Place}",
 					NoLessons = "Нет пар",
-					PeerId = 0,
+					PeerId = peerid,
 					Targets = new List<string>(new[] {target})
 				};
 				Config = new Config
@@ -99,7 +102,8 @@ namespace Botyara.Console
 				if (!ret)
 				{
 					Log.Fatal("Завершение программы потому что не были введены параметры");
-					return;
+					LogManager.Shutdown();
+					Environment.Exit(0);
 				}
 			}
 

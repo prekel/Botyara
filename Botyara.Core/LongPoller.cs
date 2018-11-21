@@ -36,8 +36,7 @@ namespace Botyara.Core
 		private IDictionary<string, string> Params { get; set; }
 
 		public event EventHandler ResponseReceived;
-
-
+		
 		public LongPoller(VkApi api, ulong gpoupid)
 		{
 			Api = api;
