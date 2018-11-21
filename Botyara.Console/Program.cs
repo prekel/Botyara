@@ -31,15 +31,20 @@ namespace Botyara.Console
 		{
 			LogManager.Configuration.Variables["starttime"] = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss-ffff");
 			OutputEncoding = Encoding.UTF8;
-			CancelKeyPress += Program_CancelKeyPress;
-			Log.Trace("1234");
-			Log.Info("1234");
-			Log.Debug("1234");
-			Log.Warn("1234");
-			Log.Error("1234");
-			Log.Fatal("1234");
-			if (String.Join("; ", Directory.GetFiles(".")).Contains("config.json"))
+			InputEncoding = Encoding.Unicode;
+			if (args.Contains("utf8"))
 			{
+				InputEncoding = Encoding.UTF8;
+			}
+			CancelKeyPress += Program_CancelKeyPress;
+			//Log.Trace("1234");
+			//Log.Info("1234");
+			//Log.Debug("1234");
+			//Log.Warn("1234");
+			//Log.Error("1234");
+			//Log.Fatal("1234");
+			if (File.Exists("config.json"))
+				{
 				Log.Info("Загружается конфирурация");
 				Config = JsonConvert.DeserializeObject<Config>(new StreamReader("config.json").ReadToEnd());
 				Log.Info("Загружена конфигурация");
