@@ -63,7 +63,7 @@ namespace Botyara.Core
 				var spl = msgtext.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
 				var a = 0;
 				var b = 0;
-				if (spl.Length != 2) return;
+				//if (spl.Length != 2) return;
 				try
 				{
 					a = Int32.Parse(spl[0]);
