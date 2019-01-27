@@ -34,6 +34,7 @@ namespace Botyara.Core
 
 		private void LpOnResponseReceived(object sender, EventArgs e)
 		{
+			var r = new Random();
 			var lpe = (LongPollResponseEventArgs) e;
 			var resp = lpe.RawResponse;
 			var resp1 = lpe.Response;
@@ -82,7 +83,8 @@ namespace Botyara.Core
 				Api.Messages.Send(new MessagesSendParams
 				{
 					PeerId = msg.PeerId,
-					Message = ans
+					Message = ans,
+					RandomId = r.Next()
 				});
 				Log.Debug("Отвечено");
 			}
