@@ -36,7 +36,10 @@ namespace Botyara.Core
 		private IDictionary<string, string> Params { get; set; }
 
 		public event EventHandler ResponseReceived;
-		
+
+		public TimeSpan Wait { get; set; } = TimeSpan.FromSeconds(25);
+		public TimeSpan TimeOut { get; set; } = TimeSpan.FromSeconds(5);
+
 		public LongPoller(VkApi api, ulong gpoupid)
 		{
 			Api = api;
@@ -55,7 +58,23 @@ namespace Botyara.Core
 				["act"] = "a_check",
 				["key"] = LongPoolServer.Key,
 				["ts"] = LongPoolServer.Ts,
-				["wait"] = "25"
+				["wait"] = ((int)Wait.TotalSeconds).ToString()
+			};
+		}
+
+		public async Task StartAsync()
+		{
+			Log.Debug("Получение LongPoolServer");
+			LongPoolServer = Api.Groups.GetLongPollServer(GroupId);
+			Log.Debug("Получен LongPoolServer");
+			//Log.Trace($"{LongPoolServer.Server} {LongPoolServer.Key} {LongPoolServer.Ts}");
+
+			Params = new Dictionary<string, string>
+			{
+				["act"] = "a_check",
+				["key"] = LongPoolServer.Key,
+				["ts"] = LongPoolServer.Ts,
+				["wait"] = ((int)Wait.TotalSeconds).ToString()
 			};
 		}
 
@@ -71,8 +90,9 @@ namespace Botyara.Core
 			while (true)
 			{
 				var task = Api.CallLongPollAsync(LongPoolServer.Server, new VkNet.Utils.VkParameters(Params));
-				var timeout = Int32.Parse(Params["ts"]) + 5;
-				if (await Task.WhenAny(task, Task.Delay(TimeSpan.FromSeconds(timeout))) == task)
+
+				var timeout = Task.Delay(Wait + TimeOut);
+				if (await Task.WhenAny(task, timeout) == task)
 				{
 					var resp = task.Result;
 					OnResponseReceived(new LongPollResponseEventArgs(resp));
