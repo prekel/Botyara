@@ -96,6 +96,7 @@ namespace Botyara.Core
 		[Obsolete]
 		private void LpOnResponseReceived1(object sender, EventArgs e)
 		{
+			var r = new Random();
 			var lpe = (LongPollResponseEventArgs) e;
 			var resp = lpe.RawResponse;
 			var resp1 = lpe.Response;
@@ -134,7 +135,8 @@ namespace Botyara.Core
 					Api.Messages.Send(new MessagesSendParams
 					{
 						PeerId = resp1.Updates[0].Object.PeerId,
-						Message = msg
+						Message = msg,
+						RandomId = r.Next()
 					});
 				}
 			}
