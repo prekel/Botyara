@@ -65,14 +65,24 @@ namespace Botyara.Core
 			handler?.Invoke(this, e);
 		}
 
-		public async void Run()
+		public async Task RunAsync()
 		{
 			Log.Debug("Запущен LongPoolServer");
 			while (true)
 			{
-				var resp = await Api.CallLongPollAsync(LongPoolServer.Server, new VkNet.Utils.VkParameters(Params));
-				OnResponseReceived(new LongPollResponseEventArgs(resp));
-				Params["ts"] = resp["ts"];
+				var task = Api.CallLongPollAsync(LongPoolServer.Server, new VkNet.Utils.VkParameters(Params));
+				var timeout = Int32.Parse(Params["ts"]) + 5;
+				if (await Task.WhenAny(task, Task.Delay(TimeSpan.FromSeconds(timeout))) == task)
+				{
+					var resp = task.Result;
+					OnResponseReceived(new LongPollResponseEventArgs(resp));
+					Params["ts"] = resp["ts"];
+				}
+				else
+				{
+					Log.Warn("Таймаут LongPool-запроса, перезапуск");
+					Start();
+				}
 			}
 		}
 	}

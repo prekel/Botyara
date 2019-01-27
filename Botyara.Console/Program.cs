@@ -17,6 +17,7 @@ using Microsoft.Extensions.Logging;
 using NLog;
 using System;
 using System.Text;
+using System.Threading.Tasks;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace Botyara.Console
@@ -44,7 +45,7 @@ namespace Botyara.Console
 			//Log.Error("1234");
 			//Log.Fatal("1234");
 			if (File.Exists("config.json"))
-				{
+			{
 				Log.Info("Загружается конфирурация");
 				Config = JsonConvert.DeserializeObject<Config>(new StreamReader("config.json").ReadToEnd());
 				Log.Info("Загружена конфигурация");
@@ -72,7 +73,7 @@ namespace Botyara.Console
 					target = ReadLine();
 					return true;
 				}
-				
+
 				Log.Info("Открывается диалог введения параметров");
 				var ret = Dialog();
 
@@ -83,13 +84,13 @@ namespace Botyara.Console
 					LessonString = "{NumberInTimetable}) {Time} {Subject} ({Type}) {Teacher} {Place}",
 					NoLessons = "Нет пар",
 					PeerId = peerid,
-					Targets = new List<string>(new[] {target})
+					Targets = new List<string>(new[] { target })
 				};
 				Config = new Config
 				{
 					AccessToken = token,
 					GroupId = groupid,
-					ChatConfigs = new List<ChatConfig>(new[] {config1})
+					ChatConfigs = new List<ChatConfig>(new[] { config1 })
 				};
 
 				Log.Info("Сохраняется конфигурация");
@@ -113,11 +114,11 @@ namespace Botyara.Console
 			Log.Debug("Создание и старт LongPollServer");
 			var lp = new LongPoller(auth.Api, Config.GroupId);
 			lp.Start();
-			lp.Run();
+			Task.Run(() => lp.RunAsync());
 
 			Log.Debug("Создание и старт Answerer");
 			var t1 = new Answerer(auth.Api, lp, Config);
-			
+
 			while (true)
 			{
 				Log.Debug("Приложение работает");
@@ -134,7 +135,7 @@ namespace Botyara.Console
 
 		private static void LpOnResponseReceived(object sender, EventArgs e)
 		{
-			var lpe = (LongPollResponseEventArgs) e;
+			var lpe = (LongPollResponseEventArgs)e;
 			WriteLine(lpe.RawResponse.RawJson);
 		}
 	}
