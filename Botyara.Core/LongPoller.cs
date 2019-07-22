@@ -21,7 +21,7 @@ namespace Botyara.Core
 		public LongPollResponseEventArgs(VkResponse rawresp)
 		{
 			RawResponse = rawresp;
-			Response = JsonConvert.DeserializeObject<Botyara.Core.Response.Response>(rawresp.RawJson);
+			Response = JsonConvert.DeserializeObject<global::Botyara.Core.Response.Response>(rawresp.RawJson);
 		}
 	}
 

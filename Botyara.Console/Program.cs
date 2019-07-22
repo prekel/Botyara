@@ -117,7 +117,7 @@ namespace Botyara.Console
 			Task.Run(() => lp.RunAsync());
 
 			Log.Debug("Создание и старт Answerer");
-			var t1 = new Answerer(auth.Api, lp, Config);
+			var t1 = new LongPoolAnswerer(auth.Api, lp, Config);
 
 			while (true)
 			{

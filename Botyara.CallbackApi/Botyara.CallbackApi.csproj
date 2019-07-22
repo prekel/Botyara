@@ -11,4 +11,8 @@
         <PackageReference Include="VkNet" Version="1.42.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Botyara.Core\Botyara.Core.csproj" />
+    </ItemGroup>
+
 </Project>

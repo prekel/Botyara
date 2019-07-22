@@ -4,18 +4,22 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
-using Botyara.Core.Configs;
+using Microsoft.Extensions.Logging;
+
 using VkNet;
+using VkNet.Model;
 using VkNet.Enums.SafetyEnums;
 using VkNet.Model.RequestParams;
-using Newtonsoft.Json;
-using Microsoft.Extensions.Logging;
+using VkNet.Utils;
 using NLog;
+using Newtonsoft.Json;
+
+using Botyara.Core.Configs;
 using Botyara.SfuApi;
 
 namespace Botyara.Core
 {
-	public class Answerer
+	public class LongPoolAnswerer
 	{
 		private static Logger Log { get; } = LogManager.GetCurrentClassLogger();
 		
@@ -23,7 +27,7 @@ namespace Botyara.Core
 		public LongPoller LongPoller { get; private set; }
 		public Config Config { get; private set; }
 
-		public Answerer(VkApi api, LongPoller lp, Config config)
+		public LongPoolAnswerer(VkApi api, LongPoller lp, Config config)
 		{
 			Api = api;
 			LongPoller = lp;
@@ -60,7 +64,11 @@ namespace Botyara.Core
 				var msg = resp1.Updates[0].Object;
 				var msgtext = msg.Text;
 				if (msgtext == "") return;
-				
+
+                //
+                var msg1 = VkNet.Model.Message.FromJson(new VkResponse(resp1.Updates.First().Object1));
+                //
+
 				var spl = msgtext.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
 				var a = 0;
 				var b = 0;

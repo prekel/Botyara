@@ -4,6 +4,8 @@ using Newtonsoft.Json;
 using VkNet.Model;
 using VkNet.Utils;
 
+using Botyara.Core;
+
 namespace Botyara.CallbackApi.Controllers
 {
     [Route("api/[controller]")]
@@ -15,9 +17,12 @@ namespace Botyara.CallbackApi.Controllers
         /// </summary>
         private readonly IConfiguration _configuration;
 
+        private CallbackAnswerer Answerer { get; }
+
         public CallbackController(IConfiguration configuration)
         {
             _configuration = configuration;
+            Answerer = new CallbackAnswerer()
         }
 
         [HttpPost("/")]
