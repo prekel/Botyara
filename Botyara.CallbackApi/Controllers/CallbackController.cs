@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Botyara.Core;
+
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
+
 using VkNet.Model;
 using VkNet.Utils;
-
-using Botyara.Core;
 
 namespace Botyara.CallbackApi.Controllers
 {
@@ -13,17 +13,14 @@ namespace Botyara.CallbackApi.Controllers
     public class CallbackController : ControllerBase
     {
         /// <summary>
-        /// Конфигурация приложения
+        ///     Конфигурация приложения
         /// </summary>
         private readonly IConfiguration _configuration;
 
-        private CallbackAnswerer Answerer { get; }
+        public CallbackController(IConfiguration configuration) => _configuration = configuration;
 
-        public CallbackController(IConfiguration configuration)
-        {
-            _configuration = configuration;
-            Answerer = new CallbackAnswerer()
-        }
+        //Answerer = new CallbackAnswerer()
+        private CallbackAnswerer Answerer { get; }
 
         [HttpPost("/")]
         public IActionResult Callback([FromBody] Updates updates)

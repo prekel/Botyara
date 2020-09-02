@@ -1,12 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <LangVersion>8</LangVersion>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="NLog" Version="4.5.11" />
-      <PackageReference Include="VkNet" Version="1.41.0" />
+      <PackageReference Include="VkNet" Version="1.55.0" />
     </ItemGroup>
 
     <ItemGroup>

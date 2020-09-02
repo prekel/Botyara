@@ -1,159 +1,165 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
-using Microsoft.Extensions.Logging;
-
-using VkNet;
-using VkNet.Model;
-using VkNet.Enums.SafetyEnums;
-using VkNet.Model.RequestParams;
-using VkNet.Utils;
-using NLog;
-using Newtonsoft.Json;
 
 using Botyara.Core.Configs;
 using Botyara.SfuApi;
 
+using NLog;
+
+using VkNet;
+using VkNet.Model;
+using VkNet.Model.RequestParams;
+using VkNet.Utils;
+
 namespace Botyara.Core
 {
-	public class LongPoolAnswerer
-	{
-		private static Logger Log { get; } = LogManager.GetCurrentClassLogger();
-		
-		public VkApi Api { get; private set; }
-		public LongPoller LongPoller { get; private set; }
-		public Config Config { get; private set; }
+    public class LongPoolAnswerer
+    {
+        public LongPoolAnswerer(VkApi api, LongPoller lp, Config config)
+        {
+            Api = api;
+            LongPoller = lp;
+            lp.ResponseReceived += LpOnResponseReceived;
+            Config = config;
+            Log.Debug("Создан Answerer");
+        }
 
-		public LongPoolAnswerer(VkApi api, LongPoller lp, Config config)
-		{
-			Api = api;
-			LongPoller = lp;
-			lp.ResponseReceived += LpOnResponseReceived;
-			Config = config;
-			Log.Debug("Создан Answerer");
-		}
+        private static Logger Log { get; } = LogManager.GetCurrentClassLogger();
 
-		private void LpOnResponseReceived(object sender, EventArgs e)
-		{
-			var r = new Random();
-			var lpe = (LongPollResponseEventArgs) e;
-			var resp = lpe.RawResponse;
-			var resp1 = lpe.Response;
+        public VkApi Api { get; }
+        public LongPoller LongPoller { get; }
+        public Config Config { get; }
 
-			//Console.WriteLine(resp.RawJson);
-			Log.Trace(resp.RawJson.TrimEnd());
+        private void LpOnResponseReceived(object sender, EventArgs e)
+        {
+            var r = new Random();
+            var lpe = (LongPollResponseEventArgs) e;
+            var resp = lpe.RawResponse;
+            var resp1 = lpe.Response;
 
-			if (resp1.Failed != null)
-			{
-				Log.Warn("Ошибка сервера, перезапуск");
-				LongPoller.Start();
-				return;
-			}
+            //Console.WriteLine(resp.RawJson);
+            Log.Trace(resp.RawJson.TrimEnd());
 
-			if (resp1.Updates.Count == 0)
-			{
-				return;
-			}
+            if (resp1.Failed != null)
+            {
+                Log.Warn("Ошибка сервера, перезапуск");
+                LongPoller.Start();
+                return;
+            }
 
-			try
-			{
-				if (resp1.Updates[0].Type != "message_new") return;
-				var msg = resp1.Updates[0].Object;
-				var msgtext = msg.Text;
-				if (msgtext == "") return;
+            if (resp1.Updates.Count == 0)
+            {
+                return;
+            }
+
+            try
+            {
+                if (resp1.Updates[0].Type != "message_new")
+                {
+                    return;
+                }
+
+                var msg = resp1.Updates[0].Object;
+                var msgtext = msg.Text;
+                if (msgtext == "")
+                {
+                    return;
+                }
 
                 //
-                var msg1 = VkNet.Model.Message.FromJson(new VkResponse(resp1.Updates.First().Object1));
+                var msg1 = Message.FromJson(new VkResponse(resp1.Updates.First().Object1));
                 //
 
-				var spl = msgtext.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
-				var a = 0;
-				var b = 0;
-				//if (spl.Length != 2) return;
-				try
-				{
-					a = Int32.Parse(spl[0]);
-					b = Int32.Parse(spl[1]);
-				}
-				catch
-				{
-					return;
-				}
+                var spl = msgtext.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+                var a = 0;
+                var b = 0;
+                //if (spl.Length != 2) return;
+                try
+                {
+                    a = Int32.Parse(spl[0]);
+                    b = Int32.Parse(spl[1]);
+                }
+                catch
+                {
+                    return;
+                }
 
-				var chatConfig = (from i in Config.ChatConfigs where i.PeerId == msg.PeerId select i).First();
-				var compiler = new Compiler(chatConfig);
-				var ans = compiler.Compile((Day) a, (Week) b);
+                var chatConfig = (from i in Config.ChatConfigs where i.PeerId == msg.PeerId select i).First();
+                var compiler = new Compiler(chatConfig);
+                var ans = compiler.Compile((Day) a, (Week) b);
 
-				Log.Trace($"Ответ сформирован:\r\n{ans.Trim()}");
-				Api.Messages.Send(new MessagesSendParams
-				{
-					PeerId = msg.PeerId,
-					Message = ans,
-					RandomId = r.Next()
-				});
-				Log.Debug("Отвечено");
-			}
-			catch (Exception ex)
-			{
-				Log.Warn(ex);
-				//Console.WriteLine(ex);
-			}
-		}
-		
-		[Obsolete]
-		private void LpOnResponseReceived1(object sender, EventArgs e)
-		{
-			var r = new Random();
-			var lpe = (LongPollResponseEventArgs) e;
-			var resp = lpe.RawResponse;
-			var resp1 = lpe.Response;
+                Log.Trace($"Ответ сформирован:\r\n{ans.Trim()}");
+                Api.Messages.Send(new MessagesSendParams
+                {
+                    PeerId = msg.PeerId,
+                    Message = ans,
+                    RandomId = r.Next()
+                });
+                Log.Debug("Отвечено");
+            }
+            catch (Exception ex)
+            {
+                Log.Warn(ex);
+                //Console.WriteLine(ex);
+            }
+        }
 
-			Console.WriteLine(resp.RawJson);
+        [Obsolete]
+        private void LpOnResponseReceived1(object sender, EventArgs e)
+        {
+            var r = new Random();
+            var lpe = (LongPollResponseEventArgs) e;
+            var resp = lpe.RawResponse;
+            var resp1 = lpe.Response;
 
-			if (resp1.Failed != null)
-			{
-				LongPoller.Start();
-				return;
-			}
+            Console.WriteLine(resp.RawJson);
 
-			if (resp1.Updates.Count == 0)
-			{
-				return;
-			}
+            if (resp1.Failed != null)
+            {
+                LongPoller.Start();
+                return;
+            }
 
-			try
-			{
-				var msg = resp1.Updates[0].Object.Text;
+            if (resp1.Updates.Count == 0)
+            {
+                return;
+            }
 
-				var spl = msg.Split();
-				var a = 0;
-				var b = 0;
-				if (spl.Length != 2) return;
-				a = Int32.Parse(spl[0]);
-				b = Int32.Parse(spl[1]);
+            try
+            {
+                var msg = resp1.Updates[0].Object.Text;
 
-				var c = new TimetableBuilder("КИ18-17/1б");
-				var t = c.Get();
-				msg = String.Join(", ", from i in t.Timetable where (int)i.Day == a && (int)i.Week == b select i.Subject);
+                var spl = msg.Split();
+                var a = 0;
+                var b = 0;
+                if (spl.Length != 2)
+                {
+                    return;
+                }
 
-				var typ = resp1.Updates[0].Type;
-				if (msg != "" && typ == "message_new")
-				{
-					Api.Messages.Send(new MessagesSendParams
-					{
-						PeerId = resp1.Updates[0].Object.PeerId,
-						Message = msg,
-						RandomId = r.Next()
-					});
-				}
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex);
-			}
-		}
-	}
+                a = Int32.Parse(spl[0]);
+                b = Int32.Parse(spl[1]);
+
+                var c = new TimetableBuilder("КИ18-17/1б");
+                var t = c.Get();
+                msg = String.Join(", ",
+                    from i in t.Timetable where (int) i.Day == a && (int) i.Week == b select i.Subject);
+
+                var typ = resp1.Updates[0].Type;
+                if (msg != "" && typ == "message_new")
+                {
+                    Api.Messages.Send(new MessagesSendParams
+                    {
+                        PeerId = resp1.Updates[0].Object.PeerId,
+                        Message = msg,
+                        RandomId = r.Next()
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+    }
 }

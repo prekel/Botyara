@@ -2,245 +2,222 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+
 using Botyara.Core.Configs;
 using Botyara.SfuApi;
 
 namespace Botyara.Core
 {
-	public class DataDict : IDictionary<string, object>
-	{
-		public ChatConfig Config { get; private set; }
-		public IDictionary<string, StudyTimetable> Timetables { get; private set; }
-		public Day Day { get; private set; }
-		public Week Week { get; private set; }
+    public class DataDict : IDictionary<string, object>
+    {
+        public DataDict(ChatConfig config, IDictionary<string, StudyTimetable> timetables, Day day, Week week)
+        {
+            Config = config;
+            Timetables = timetables;
+            Day = day;
+            Week = week;
+        }
 
-		public string CurrentTarget { get; set; }
-		public int CurrentLessonNumber { get; set; }
+        public ChatConfig Config { get; }
+        public IDictionary<string, StudyTimetable> Timetables { get; }
+        public Day Day { get; }
+        public Week Week { get; }
 
-		public IList<StudyLesson> CurrentDay =>
-			(from value in Timetables[CurrentTarget].Timetable
-				where value.Day == Day && value.Week == Week
-				select value).ToList();
+        public string CurrentTarget { get; set; }
+        public int CurrentLessonNumber { get; set; }
 
-		public StudyLesson CurrentLesson => CurrentDay[CurrentLessonNumber - 1];
+        public IList<StudyLesson> CurrentDay =>
+            (from value in Timetables[CurrentTarget].Timetable
+                where value.Day == Day && value.Week == Week
+                select value).ToList();
 
-		public DataDict(ChatConfig config, IDictionary<string, StudyTimetable> timetables, Day day, Week week)
-		{
-			Config = config;
-			Timetables = timetables;
-			Day = day;
-			Week = week;
-		}
+        public StudyLesson CurrentLesson => CurrentDay[CurrentLessonNumber - 1];
 
-		public int Count { get; }
-		public bool IsReadOnly { get; } = true;
+        public int Count { get; }
+        public bool IsReadOnly { get; } = true;
 
-		private string c_OddEvenDayVinPod()
-		{
-			return DayNameVinPod(Day, Week);
-		}
+        public object this[string key]
+        {
+            get
+            {
+                switch (key)
+                {
+                    case "OddEvenDayVinPod":
+                        return c_OddEvenDayVinPod();
+                    case "Target":
+                        return c_Target();
+                    case "TargetsList":
+                        return c_TargetsList();
+                    case "NumberInTimetable":
+                        return c_NumberInTimetable();
+                    case "NumberInOrder":
+                        return c_NumberInOrder();
+                    case "Time":
+                        return c_Time();
+                    case "Subject":
+                        return c_Subject();
+                    case "Type":
+                        return c_Type();
+                    case "Teacher":
+                        return c_Teacher();
+                    case "Place":
+                        return c_Place();
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+            set => throw new NotImplementedException();
+        }
 
-		public static string DayNameVinPod(Day day, Week week)
-		{
-			switch (week)
-			{
-				case Week.Even when day == Day.Monday:
-					return "чётный понедельник";
-				case Week.Even when day == Day.Tuesday:
-					return "чётный вторник";
-				case Week.Even when day == Day.Wednesday:
-					return "чётную среду";
-				case Week.Even when day == Day.Thursday:
-					return "чётный четверг";
-				case Week.Even when day == Day.Friday:
-					return "чётную пятницу";
-				case Week.Even when day == Day.Saturday:
-					return "чётную субботу";
-				case Week.Even when day == Day.Sunday:
-					return "чётное воскресенья";
-				case Week.Odd when day == Day.Monday:
-					return "нечётный понедельник";
-				case Week.Odd when day == Day.Tuesday:
-					return "нечётный вторник";
-				case Week.Odd when day == Day.Wednesday:
-					return "нечётную среду";
-				case Week.Odd when day == Day.Thursday:
-					return "нечётный четверг";
-				case Week.Odd when day == Day.Friday:
-					return "нечётную пятницу";
-				case Week.Odd when day == Day.Saturday:
-					return "нечётную субботу";
-				case Week.Odd when day == Day.Sunday:
-					return "нечётное воскресенье";
-				default:
-					throw new ArgumentOutOfRangeException();
-			}
-		}
+        private string c_OddEvenDayVinPod() => DayNameVinPod(Day, Week);
 
-		private string c_Target()
-		{
-			return CurrentTarget;
-		}
+        public static string DayNameVinPod(Day day, Week week)
+        {
+            switch (week)
+            {
+                case Week.Even when day == Day.Monday:
+                    return "чётный понедельник";
+                case Week.Even when day == Day.Tuesday:
+                    return "чётный вторник";
+                case Week.Even when day == Day.Wednesday:
+                    return "чётную среду";
+                case Week.Even when day == Day.Thursday:
+                    return "чётный четверг";
+                case Week.Even when day == Day.Friday:
+                    return "чётную пятницу";
+                case Week.Even when day == Day.Saturday:
+                    return "чётную субботу";
+                case Week.Even when day == Day.Sunday:
+                    return "чётное воскресенья";
+                case Week.Odd when day == Day.Monday:
+                    return "нечётный понедельник";
+                case Week.Odd when day == Day.Tuesday:
+                    return "нечётный вторник";
+                case Week.Odd when day == Day.Wednesday:
+                    return "нечётную среду";
+                case Week.Odd when day == Day.Thursday:
+                    return "нечётный четверг";
+                case Week.Odd when day == Day.Friday:
+                    return "нечётную пятницу";
+                case Week.Odd when day == Day.Saturday:
+                    return "нечётную субботу";
+                case Week.Odd when day == Day.Sunday:
+                    return "нечётное воскресенье";
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
 
-		private string c_TargetsList()
-		{
-			return String.Join(", ", Config.Targets);
-		}
+        private string c_Target() => CurrentTarget;
 
-		private int c_NumberInTimetable()
-		{
-			var time = CurrentLesson.Time;
-			if (time == "08:30-10:05")
-				return 1;
-			if (time == "10:15-11:50")
-				return 2;
-			if (time == "12:00-13:35")
-				return 3;
-			if (time == "14:10-15:45")
-				return 4;
-			if (time == "15:55-17:30")
-				return 5;
-			if (time == "17:40-19:15")
-				return 6;
-			if (time == "19:25-21:00")
-				return 7;
-			return 0;
-		}
+        private string c_TargetsList() => String.Join(", ", Config.Targets);
 
-		private int c_NumberInOrder()
-		{
-			return CurrentLessonNumber;
-		}
+        private int c_NumberInTimetable()
+        {
+            var time = CurrentLesson.Time;
+            if (time == "08:30-10:05")
+            {
+                return 1;
+            }
 
-		private string c_Time()
-		{
-			return CurrentLesson.Time;
-		}
+            if (time == "10:15-11:50")
+            {
+                return 2;
+            }
 
-		private string c_Subject()
-		{
-			return CurrentLesson.Subject;
-		}
+            if (time == "12:00-13:35")
+            {
+                return 3;
+            }
 
-		private string c_Type()
-		{
-			return CurrentLesson.Type;
-		}
+            if (time == "14:10-15:45")
+            {
+                return 4;
+            }
 
-		private string c_Teacher()
-		{
-			return CurrentLesson.Teacher;
-		}
+            if (time == "15:55-17:30")
+            {
+                return 5;
+            }
 
-		private string c_Place()
-		{
-			return CurrentLesson.Place;
-		}
+            if (time == "17:40-19:15")
+            {
+                return 6;
+            }
 
-		public object this[string key]
-		{
-			get
-			{
-				switch (key)
-				{
-					case "OddEvenDayVinPod":
-						return c_OddEvenDayVinPod();
-					case "Target":
-						return c_Target();
-					case "TargetsList":
-						return c_TargetsList();
-					case "NumberInTimetable":
-						return c_NumberInTimetable();
-					case "NumberInOrder":
-						return c_NumberInOrder();
-					case "Time":
-						return c_Time();
-					case "Subject":
-						return c_Subject();
-					case "Type":
-						return c_Type();
-					case "Teacher":
-						return c_Teacher();
-					case "Place":
-						return c_Place();
-					default:
-						throw new NotImplementedException();
-				}
-			}
-			set => throw new NotImplementedException();
-		}
+            if (time == "19:25-21:00")
+            {
+                return 7;
+            }
 
-		#region NotUsed
+            return 0;
+        }
 
-		[Obsolete]
-		public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
-		{
-			throw new NotImplementedException();
-		}
+        private int c_NumberInOrder() => CurrentLessonNumber;
 
-		[Obsolete]
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
+        private string c_Time() => CurrentLesson.Time;
 
-		[Obsolete]
-		public void Add(KeyValuePair<string, object> item)
-		{
-			throw new NotImplementedException();
-		}
+        private string c_Subject() => CurrentLesson.Subject;
 
-		[Obsolete]
-		public void Clear()
-		{
-			throw new NotImplementedException();
-		}
+        private string c_Type() => CurrentLesson.Type;
 
-		[Obsolete]
-		public bool Contains(KeyValuePair<string, object> item)
-		{
-			throw new NotImplementedException();
-		}
+        private string c_Teacher() => CurrentLesson.Teacher;
 
-		[Obsolete]
-		public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex)
-		{
-			throw new NotImplementedException();
-		}
+        private string c_Place() => CurrentLesson.Place;
 
-		[Obsolete]
-		public bool Remove(KeyValuePair<string, object> item)
-		{
-			throw new NotImplementedException();
-		}
+        #region NotUsed
 
-		[Obsolete]
-		public void Add(string key, object value)
-		{
-			throw new NotImplementedException();
-		}
+        [Obsolete]
+        public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => throw new NotImplementedException();
 
-		[Obsolete]
-		public bool ContainsKey(string key)
-		{
-			throw new NotImplementedException();
-		}
+        [Obsolete]
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-		[Obsolete]
-		public bool Remove(string key)
-		{
-			throw new NotImplementedException();
-		}
+        [Obsolete]
+        public void Add(KeyValuePair<string, object> item)
+        {
+            throw new NotImplementedException();
+        }
 
-		[Obsolete]
-		public bool TryGetValue(string key, out object value)
-		{
-			throw new NotImplementedException();
-		}
+        [Obsolete]
+        public void Clear()
+        {
+            throw new NotImplementedException();
+        }
 
-		[Obsolete] public ICollection<string> Keys { get; }
-		[Obsolete] public ICollection<object> Values { get; }
+        [Obsolete]
+        public bool Contains(KeyValuePair<string, object> item) => throw new NotImplementedException();
 
-		#endregion
-	}
+        [Obsolete]
+        public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        [Obsolete]
+        public bool Remove(KeyValuePair<string, object> item) => throw new NotImplementedException();
+
+        [Obsolete]
+        public void Add(string key, object value)
+        {
+            throw new NotImplementedException();
+        }
+
+        [Obsolete]
+        public bool ContainsKey(string key) => throw new NotImplementedException();
+
+        [Obsolete]
+        public bool Remove(string key) => throw new NotImplementedException();
+
+        [Obsolete]
+        public bool TryGetValue(string key, out object value) => throw new NotImplementedException();
+
+        [Obsolete]
+        public ICollection<string> Keys { get; }
+
+        [Obsolete]
+        public ICollection<object> Values { get; }
+
+        #endregion
+    }
 }

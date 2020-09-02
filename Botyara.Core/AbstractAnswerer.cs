@@ -1,8 +1,11 @@
-﻿using Botyara.Core.Configs;
-using Botyara.SfuApi;
-using NLog;
-using System;
+﻿using System;
 using System.Linq;
+
+using Botyara.Core.Configs;
+using Botyara.SfuApi;
+
+using NLog;
+
 using VkNet;
 using VkNet.Model;
 
@@ -10,17 +13,17 @@ namespace Botyara.Core
 {
     public abstract class AbstractAnswerer
     {
-        private static Logger Log { get; } = LogManager.GetCurrentClassLogger();
-
-        public VkApi Api { get; private set; }
-
-        public Config Config { get; private set; }
-
         public AbstractAnswerer(VkApi api, Config config)
         {
             Api = api;
             Config = config;
         }
+
+        private static Logger Log { get; } = LogManager.GetCurrentClassLogger();
+
+        public VkApi Api { get; }
+
+        public Config Config { get; }
 
         public string AnswerFromMessage(Message msg)
         {
@@ -31,7 +34,7 @@ namespace Botyara.Core
                 throw new ApplicationException("Пустой запрос");
             }
 
-            var spl = msgtext.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var spl = msgtext.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
             var a = 0;
             var b = 0;
             //if (spl.Length != 2) return;
@@ -47,7 +50,7 @@ namespace Botyara.Core
 
             var chatConfig = (from i in Config.ChatConfigs where i.PeerId == msg.PeerId select i).First();
             var compiler = new Compiler(chatConfig);
-            var ans = compiler.Compile((Day)a, (Week)b);
+            var ans = compiler.Compile((Day) a, (Week) b);
 
             Log.Trace($"Ответ сформирован:\r\n{ans.Trim()}");
             return ans;
